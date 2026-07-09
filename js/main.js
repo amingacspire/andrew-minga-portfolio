@@ -7,6 +7,15 @@
   const yearEl = document.getElementById('footer-year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+  // ── Headshot fallback (CSS avatar if image fails) ─────────────
+  const headshot = document.querySelector('.about__img');
+  if (headshot) {
+    headshot.addEventListener('error', () => {
+      headshot.style.display = 'none';
+      headshot.parentElement.classList.add('about__photo--fallback');
+    }, { once: true });
+  }
+
   // ── Sticky nav on scroll ───────────────────────────────────────
   const header = document.querySelector('.site-header');
   function onScroll() {
@@ -66,6 +75,7 @@
 
   function openMenu() {
     hamburger.setAttribute('aria-expanded', 'true');
+    hamburger.setAttribute('aria-label', 'Close navigation menu');
     mobileNav.classList.add('is-open');
     const links = getFocusableLinks();
     if (links.length) links[0].focus();
@@ -73,6 +83,7 @@
 
   function closeMenu(returnFocus) {
     hamburger.setAttribute('aria-expanded', 'false');
+    hamburger.setAttribute('aria-label', 'Open navigation menu');
     mobileNav.classList.remove('is-open');
     if (returnFocus) hamburger.focus();
   }

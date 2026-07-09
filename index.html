@@ -15,6 +15,54 @@
   <meta property="og:image" content="https://mingasolutions.com/assets/og-preview.jpg">
   <meta property="og:url" content="https://mingasolutions.com">
 
+  <!-- Twitter / X cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Andrew Minga | IT Leader">
+  <meta name="twitter:description" content="Azure Solutions Architect Expert (AZ-305). Help desk to cloud architect in 10 years. Manager, Customer Experience Engineering at C Spire.">
+  <meta name="twitter:image" content="https://mingasolutions.com/assets/og-preview.jpg">
+
+  <!-- JSON-LD structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Andrew Minga",
+    "jobTitle": "Manager, Customer Experience Engineering",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "C Spire"
+    },
+    "url": "https://mingasolutions.com",
+    "sameAs": ["https://www.linkedin.com/in/andrew-minga-ba933587/"],
+    "knowsAbout": [
+      "Microsoft Azure", "Azure Virtual Desktop", "Microsoft 365",
+      "Microsoft Entra ID", "Microsoft Intune", "Cybersecurity",
+      "Azure Architecture", "MSP Management"
+    ],
+    "hasCredential": [
+      {
+        "@type": "EducationalOccupationalCredential",
+        "name": "Microsoft Certified: Azure Solutions Architect Expert",
+        "credentialCategory": "Professional Certification",
+        "recognizedBy": { "@type": "Organization", "name": "Microsoft" }
+      },
+      {
+        "@type": "EducationalOccupationalCredential",
+        "name": "Microsoft Certified: Azure Administrator Associate",
+        "credentialCategory": "Professional Certification",
+        "recognizedBy": { "@type": "Organization", "name": "Microsoft" }
+      },
+      {
+        "@type": "EducationalOccupationalCredential",
+        "name": "Microsoft Certified: Azure Virtual Desktop Specialty",
+        "credentialCategory": "Professional Certification",
+        "recognizedBy": { "@type": "Organization", "name": "Microsoft" }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preload" href="assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -25,7 +73,7 @@
   <!-- Navigation -->
   <header class="site-header" role="banner">
     <nav class="nav" aria-label="Main navigation">
-      <a class="nav__logo" href="#hero">AM</a>
+      <a class="nav__logo" href="#hero" aria-label="Andrew Minga home">AM</a>
       <button
         class="nav__hamburger"
         aria-controls="mobile-nav"
@@ -77,8 +125,9 @@
             alt="Andrew Minga headshot"
             width="320"
             height="320"
+            loading="lazy"
+            decoding="async"
             class="about__img"
-            onerror="this.style.display='none'; this.parentElement.classList.add('about__photo--fallback')"
           >
         </div>
         <div class="about__content">
@@ -334,7 +383,7 @@
             class="btn btn--outline"
             target="_blank"
             rel="noopener noreferrer"
-          >LinkedIn</a>
+          >Connect on LinkedIn</a>
         </div>
       </div>
     </section>
@@ -343,7 +392,7 @@
 
   <footer class="site-footer" role="contentinfo">
     <div class="container">
-      <p>&copy; <span id="footer-year"></span> Andrew Minga. All rights reserved.</p>
+      <p>&copy; <span id="footer-year">2026</span> Andrew Minga. All rights reserved.</p>
     </div>
   </footer>
 
