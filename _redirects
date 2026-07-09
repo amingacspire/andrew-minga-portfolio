@@ -1,0 +1,5 @@
+# Redirect rules — works on both Netlify and Cloudflare Pages
+# HTTPS enforcement: handled by Cloudflare SSL/TLS settings (set to "Full (strict)")
+
+# www to apex canonical
+https://www.mingasolutions.com/* https://mingasolutions.com/:splat 301!
