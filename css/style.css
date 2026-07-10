@@ -574,9 +574,29 @@ ul { list-style: none; }
 
 .skills__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: var(--space-md);
   margin-top: var(--space-lg);
+}
+
+.skills__certs {
+  margin-top: var(--space-md);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+}
+
+.skills__certs .skills__group-title {
+  margin-bottom: var(--space-sm);
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.skills__cert-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0 var(--space-md);
 }
 
 .skills__group {
@@ -1050,6 +1070,10 @@ ul { list-style: none; }
   .stat:not(:last-child)::after { height: 40%; }
 
   .interests__grid { grid-template-columns: 1fr; }
+
+  .skills__grid { grid-template-columns: repeat(2, 1fr); }
+
+  .skills__cert-grid { grid-template-columns: 1fr; }
 
   .learning-item { flex-direction: column; align-items: flex-start; }
 }
