@@ -63,6 +63,115 @@
     });
   });
 
+  // ── Hero canvas particle network ──────────────────────────────
+  const heroCanvas = document.querySelector('.hero__canvas');
+  if (heroCanvas && !prefersReducedMotion) {
+    const ctx = heroCanvas.getContext('2d');
+    const COUNT = 60;
+    const MAX_DIST = 140;
+    let pts = [];
+
+    function resizeCanvas() {
+      heroCanvas.width = heroCanvas.offsetWidth;
+      heroCanvas.height = heroCanvas.offsetHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    for (let i = 0; i < COUNT; i++) {
+      pts.push({
+        x: Math.random() * heroCanvas.width,
+        y: Math.random() * heroCanvas.height,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4
+      });
+    }
+
+    function drawCanvas() {
+      ctx.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
+      pts.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0 || p.x > heroCanvas.width)  p.vx *= -1;
+        if (p.y < 0 || p.y > heroCanvas.height) p.vy *= -1;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(0,192,243,0.3)';
+        ctx.fill();
+      });
+      for (let i = 0; i < pts.length; i++) {
+        for (let j = i + 1; j < pts.length; j++) {
+          const dx = pts[i].x - pts[j].x;
+          const dy = pts[i].y - pts[j].y;
+          const d = Math.sqrt(dx * dx + dy * dy);
+          if (d < MAX_DIST) {
+            ctx.beginPath();
+            ctx.moveTo(pts[i].x, pts[i].y);
+            ctx.lineTo(pts[j].x, pts[j].y);
+            ctx.strokeStyle = 'rgba(0,192,243,' + (0.1 * (1 - d / MAX_DIST)) + ')';
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(drawCanvas);
+    }
+    drawCanvas();
+  }
+
+  // ── Terminal typing animation ──────────────────────────────────
+  const terminalEl = document.getElementById('terminal-code');
+  if (terminalEl) {
+    const snippets = [
+      '# Deploy Azure Virtual Desktop host pool\n$pool = @{\n  Name              = \'csb-avd-pool\'\n  ResourceGroupName = \'rg-avd-prod\'\n  HostPoolType      = \'Pooled\'\n  MaxSessionLimit   = 10\n}\nNew-AzWvdHostPool @pool',
+      '# Enforce MFA via Conditional Access\n$policy = @{\n  DisplayName = \'Require-MFA-AllUsers\'\n  State       = \'enabled\'\n  Conditions  = @{\n    Users        = @{ IncludeUsers = @(\'All\') }\n    Applications = @{ IncludeApplications = @(\'All\') }\n  }\n}\nNew-MgIdentityConditionalAccessPolicy @policy',
+      '// host-pool.bicep\nresource pool \'Microsoft.DesktopVirtualization/hostPools@2022-09-09\' = {\n  name: \'csb-avd-pool\'\n  location: resourceGroup().location\n  properties: {\n    hostPoolType:     \'Pooled\'\n    maxSessionLimit:  10\n    loadBalancerType: \'BreadthFirst\'\n  }\n}'
+    ];
+
+    if (prefersReducedMotion) {
+      terminalEl.textContent = snippets[0];
+    } else {
+      let si = 0, ci = 0;
+      function typeChar() {
+        const text = snippets[si];
+        if (ci <= text.length) {
+          terminalEl.textContent = text.slice(0, ci++);
+          setTimeout(typeChar, ci === 1 ? 900 : 28 + Math.random() * 16);
+        } else {
+          setTimeout(function () {
+            terminalEl.textContent = '';
+            ci = 0;
+            si = (si + 1) % snippets.length;
+            setTimeout(typeChar, 500);
+          }, 2600);
+        }
+      }
+      typeChar();
+    }
+  }
+
+  // ── Stat counters (animate on scroll into view) ────────────────
+  const statNumbers = document.querySelectorAll('.stat__number[data-target]');
+  if (statNumbers.length) {
+    const statObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting && !entry.target.dataset.counted) {
+          entry.target.dataset.counted = '1';
+          const target = parseInt(entry.target.dataset.target, 10);
+          const t0 = performance.now();
+          const dur = 1400;
+          (function tick(now) {
+            const p = Math.min((now - t0) / dur, 1);
+            const eased = 1 - Math.pow(1 - p, 3);
+            entry.target.textContent = Math.round(eased * target);
+            if (p < 1) requestAnimationFrame(tick);
+          }(t0));
+        }
+      });
+    }, { threshold: 0.6 });
+    statNumbers.forEach(function (el) { statObs.observe(el); });
+  }
+
   // ── Mobile hamburger menu ──────────────────────────────────────
   const hamburger = document.querySelector('.nav__hamburger');
   const mobileNav = document.getElementById('mobile-nav');
