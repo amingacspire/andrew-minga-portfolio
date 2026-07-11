@@ -1033,8 +1033,10 @@ ul { list-style: none; }
    ========================================================= */
 .projects__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: var(--space-md);
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .project-card {
@@ -1091,6 +1093,19 @@ ul { list-style: none; }
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
   padding: 0.2rem 0.55rem;
+}
+
+.project-card__link {
+  align-self: flex-start;
+  margin-top: var(--space-xs);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.project-card__link:hover {
+  text-decoration: underline;
 }
 
 .projects__source {
