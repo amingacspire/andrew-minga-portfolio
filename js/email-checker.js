@@ -123,21 +123,45 @@
     }).catch(function () { return null; });
   }
 
+  // Well-known default selectors by platform. There is no DNS operation that
+  // enumerates selectors; discovery is a dictionary probe of these defaults.
+  var COMMON_SELECTORS = [
+    'selector1', 'selector2',            // Microsoft 365
+    'google',                            // Google Workspace
+    's1', 's2',                          // SendGrid, Zoho custom
+    'k1', 'k2', 'k3',                    // Mailchimp / Mandrill
+    'mandrill',
+    'pm', 'pm2',                         // Postmark
+    'fm1', 'fm2', 'fm3', 'mesmtp',       // Fastmail
+    'protonmail', 'protonmail2', 'protonmail3',
+    'zoho', 'zmail',                     // Zoho
+    'smtp', 'mx',                        // Mailgun, Brevo
+    'cm',                                // Campaign Monitor
+    'everlytickey1', 'everlytickey2',    // Everlytic
+    'zendesk1', 'zendesk2',
+    'sig1',                              // iCloud custom domains
+    'mail', 'default', 'dkim', 'key1', 'key2', 'dk'
+  ];
+
   function checkDkim(domain, userSelector) {
-    var selectors = userSelector ? [userSelector] : ['selector1', 'selector2'];
+    var selectors = userSelector ? [userSelector] : COMMON_SELECTORS;
     return Promise.all(selectors.map(function (s) { return checkDkimSelector(domain, s); }))
       .then(function (results) {
         var found = results.filter(Boolean);
+        if (!userSelector && found.length > 8) {
+          return card('warn', 'DKIM', 'wildcard suspected (' + found.length + ' of ' + COMMON_SELECTORS.length + ' selectors answered)',
+            'Nearly every probed selector returned a record, which usually means a wildcard <code>*._domainkey</code> entry rather than real per-selector keys. Verify the actual selector with your mail platform.');
+        }
         if (found.length > 0) {
-          return card('pass', 'DKIM', 'selector(s): ' + found.join(', '),
-            'DKIM key published for ' + esc(found.join(' and ')) + '. Outbound mail can be cryptographically signed.');
+          return card('pass', 'DKIM', 'selector(s) found: ' + found.join(', '),
+            'DKIM key published for ' + esc(found.join(', ')) + (userSelector ? '' : ' (discovered by probing ' + COMMON_SELECTORS.length + ' well-known selectors)') + '. Outbound mail can be cryptographically signed.');
         }
         if (userSelector) {
           return card('warn', 'DKIM', 'selector tried: ' + userSelector,
             'No DKIM key found on that selector. Double-check the selector name with your mail platform; a wrong selector is the most common false alarm in DKIM checks.');
         }
-        return card('warn', 'DKIM', 'selectors tried: selector1, selector2',
-          'No DKIM key on the Microsoft 365 default selectors. <strong>Not conclusive</strong>: the domain may sign with a custom selector (Google uses <code>google</code>, many platforms use their own). If you know the selector, re-run with it. If mail comes from M365 and these are empty, enable DKIM signing in Defender portal &gt; Email authentication settings.');
+        return card('warn', 'DKIM', 'selectors tried: ' + COMMON_SELECTORS.length + ' well-known defaults',
+          'No DKIM key found on any well-known selector (Microsoft, Google, SendGrid, Mailchimp, Postmark, Fastmail, Proton, Zoho, and others). <strong>Not conclusive</strong>: custom or randomly generated selectors (Amazon SES generates per-identity selectors) cannot be guessed. If you know the selector, re-run with it. Otherwise check your mail platform’s DKIM settings; if signing is off, turn it on.');
       });
   }
 
