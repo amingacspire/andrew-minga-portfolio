@@ -957,11 +957,102 @@ ul { list-style: none; }
    ========================================================= */
 .about::before,
 .skills::before,
+.recommendations::before,
 .contact::before {
   content: '';
   display: block;
   height: 1px;
   background: linear-gradient(90deg, transparent 0%, rgba(0, 192, 243, 0.35) 50%, transparent 100%);
+}
+
+/* =========================================================
+   Recommendations
+   ========================================================= */
+.recommendations {
+  background: var(--color-bg-raised);
+}
+
+.rec__grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.rec-card {
+  background: var(--color-placeholder);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  position: relative;
+  margin: 0;
+}
+
+.rec-card::before {
+  content: '\201C';
+  position: absolute;
+  top: -0.1em;
+  left: var(--space-md);
+  font-size: 5rem;
+  line-height: 1;
+  color: var(--color-accent);
+  opacity: 0.25;
+  font-family: Georgia, serif;
+  pointer-events: none;
+}
+
+.rec-card__quote {
+  padding-top: 1.5rem;
+  margin-bottom: var(--space-md);
+}
+
+.rec-card__quote p {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--color-text);
+  font-style: italic;
+}
+
+.rec-card__author {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-sm);
+}
+
+.rec-card__name {
+  font-weight: 700;
+  color: var(--color-accent);
+  font-size: 0.95rem;
+}
+
+.rec-card__title {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+.rec-card__source {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  margin-top: 0.25rem;
+  transition: color var(--transition);
+}
+
+.rec-card__source:hover {
+  color: var(--color-accent);
+}
+
+.rec-card__li-icon {
+  width: 0.9em;
+  height: 0.9em;
+  fill: currentColor;
+  flex-shrink: 0;
 }
 
 /* =========================================================
