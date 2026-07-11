@@ -1093,6 +1093,22 @@ ul { list-style: none; }
   padding: 0.2rem 0.55rem;
 }
 
+.projects__source {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-top: var(--space-lg);
+}
+
+.projects__source a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.projects__source a:hover {
+  text-decoration: underline;
+}
+
 /* =========================================================
    Recommendations
    ========================================================= */
