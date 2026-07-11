@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Header Analyzer: Delivery Path and Authentication | Andrew Minga</title>
+  <meta name="description" content="Paste raw email headers to see the hop-by-hop delivery path with delays, SPF/DKIM/DMARC results, and spoofing red flags. Runs entirely in your browser.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://mingasolutions.com/tools/email-header-analyzer.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Email Header Analyzer: Delivery Path and Authentication">
+  <meta property="og:description" content="Paste raw email headers to see the hop-by-hop delivery path with delays, SPF/DKIM/DMARC results, and spoofing red flags. Runs entirely in your browser.">
+  <meta property="og:image" content="https://mingasolutions.com/assets/og-preview.jpg">
+  <meta property="og:url" content="https://mingasolutions.com/tools/email-header-analyzer.html">
+  <link rel="preload" href="../assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="nav__logo" href="../index.html" aria-label="Andrew Minga home">AM</a>
+      <button
+        class="nav__hamburger"
+        aria-controls="mobile-nav"
+        aria-expanded="false"
+        aria-label="Open navigation menu"
+      >
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+      <ul class="nav__links" id="mobile-nav" role="list">
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="index.html" class="is-active" aria-current="page">Tools</a></li>
+        <li><a href="../blog/index.html">Blog</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+        <li><a href="../interests.html">Interests</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="section case">
+      <div class="container case__inner">
+        <p class="case__breadcrumb"><a href="index.html">&larr; All tools</a></p>
+        <p class="hero__eyebrow">Free tool · nothing leaves your browser</p>
+        <h1 class="case__title">Email Header Analyzer</h1>
+        <p style="color: var(--color-text-muted); line-height: 1.7; margin-bottom: 2rem;">Paste the full raw headers of a message (in Outlook: File &gt; Properties &gt; Internet headers). Parsing happens locally; the headers are never transmitted anywhere.</p>
+        <form id="header-form" class="checker__form" autocomplete="off" style="max-width: none;">
+          <div class="checker__row">
+            <label for="header-input" class="checker__label">Raw headers</label>
+            <textarea id="header-input" class="checker__input tool-textarea" rows="10" required
+              placeholder="Received: from mail.example.com ..."></textarea>
+          </div>
+          <button type="submit" class="btn btn--primary">Analyze</button>
+        </form>
+        <div id="header-status" class="checker__status" role="status" aria-live="polite"></div>
+        <div id="header-results" hidden>
+          <div id="header-summary"></div>
+          <h2 class="tool-subhead">Delivery path (oldest hop first)</h2>
+          <table class="tool-table" aria-label="Delivery hops">
+            <thead><tr><th>#</th><th>From</th><th>By</th><th>Delay</th></tr></thead>
+            <tbody id="header-hops"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer__inner">
+      <p>&copy; <span id="footer-year">2026</span> Andrew Minga. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/tools.js"></script>
+</body>
+</html>

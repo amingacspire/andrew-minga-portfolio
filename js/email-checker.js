@@ -41,7 +41,7 @@
   }
 
   function card(status, title, value, note) {
-    var chip = { pass: 'PASS', warn: 'WARN', fail: 'FAIL' }[status];
+    var chip = { pass: 'PASS', warn: 'WARN', fail: 'FAIL', info: 'INFO' }[status];
     return '<div class="check-card check-card--' + status + '">' +
       '<div class="check-card__head">' +
       '<span class="check-card__chip">' + chip + '</span>' +
@@ -180,6 +180,41 @@
     });
   }
 
+  // ── BIMI / MTA-STS / TLS-RPT (advanced standards) ────────────
+  function checkBimi(domain) {
+    return dohQuery('default._bimi.' + domain, 'TXT').then(function (data) {
+      var recs = txtRecords(data).filter(function (t) { return t.indexOf('v=BIMI1') === 0; });
+      if (recs.length === 0) {
+        return card('info', 'BIMI', null,
+          'No BIMI record. Optional: BIMI displays your logo next to messages in supporting inboxes (Gmail, Yahoo). It requires DMARC at enforcement and, for most providers, a Verified Mark Certificate. Nice-to-have, not a security gap.');
+      }
+      return card('pass', 'BIMI', recs[0], 'BIMI record published. Logo display depends on DMARC enforcement and certificate validation at the receiver.');
+    });
+  }
+
+  function checkMtaSts(domain) {
+    return dohQuery('_mta-sts.' + domain, 'TXT').then(function (data) {
+      var recs = txtRecords(data).filter(function (t) { return t.indexOf('v=STSv1') === 0; });
+      if (recs.length === 0) {
+        return card('info', 'MTA-STS', null,
+          'No MTA-STS record. Optional but recommended for mature setups: MTA-STS tells sending servers to require TLS when delivering to you, blocking downgrade attacks. Requires a policy file hosted at <code>https://mta-sts.' + esc(domain) + '/.well-known/mta-sts.txt</code>.');
+      }
+      return card('pass', 'MTA-STS', recs[0],
+        'MTA-STS record published. Note: this tool verifies the DNS record only; the policy file at mta-sts.' + esc(domain) + ' must also be reachable for enforcement to work.');
+    });
+  }
+
+  function checkTlsRpt(domain) {
+    return dohQuery('_smtp._tls.' + domain, 'TXT').then(function (data) {
+      var recs = txtRecords(data).filter(function (t) { return t.indexOf('v=TLSRPTv1') === 0; });
+      if (recs.length === 0) {
+        return card('info', 'TLS-RPT', null,
+          'No TLS-RPT record. Optional: TLS reporting sends you daily summaries when senders fail to deliver to you over TLS, which is how you find out about MTA-STS problems before your users do.');
+      }
+      return card('pass', 'TLS-RPT', recs[0], 'TLS reporting enabled.');
+    });
+  }
+
   // ── Run ──────────────────────────────────────────────────────
   form.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -200,7 +235,10 @@
       checkSpf(domain),
       checkDmarc(domain),
       checkDkim(domain, selector || null),
-      checkMx(domain)
+      checkMx(domain),
+      checkMtaSts(domain),
+      checkTlsRpt(domain),
+      checkBimi(domain)
     ]).then(function (cards) {
       cardsEl.innerHTML = cards.join('');
       domainLabel.textContent = domain;

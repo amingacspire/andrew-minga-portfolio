@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DMARC Record Generator | Andrew Minga</title>
+  <meta name="description" content="Build a DMARC record with the right policy progression, aggregate reporting, and alignment settings. Free and instant.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://mingasolutions.com/tools/dmarc-generator.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="DMARC Record Generator">
+  <meta property="og:description" content="Build a DMARC record with the right policy progression, aggregate reporting, and alignment settings. Free and instant.">
+  <meta property="og:image" content="https://mingasolutions.com/assets/og-preview.jpg">
+  <meta property="og:url" content="https://mingasolutions.com/tools/dmarc-generator.html">
+  <link rel="preload" href="../assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="nav__logo" href="../index.html" aria-label="Andrew Minga home">AM</a>
+      <button
+        class="nav__hamburger"
+        aria-controls="mobile-nav"
+        aria-expanded="false"
+        aria-label="Open navigation menu"
+      >
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+      <ul class="nav__links" id="mobile-nav" role="list">
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="index.html" class="is-active" aria-current="page">Tools</a></li>
+        <li><a href="../blog/index.html">Blog</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+        <li><a href="../interests.html">Interests</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="section case">
+      <div class="container case__inner">
+        <p class="case__breadcrumb"><a href="index.html">&larr; All tools</a></p>
+        <p class="hero__eyebrow">Free tool · runs in your browser</p>
+        <h1 class="case__title">DMARC Record Generator</h1>
+        <p style="color: var(--color-text-muted); line-height: 1.7; margin-bottom: 2rem;">Start at monitoring, review reports for a few weeks, then tighten. This generator builds the record; the discipline is on you.</p>
+        <form id="dmarc-form" class="checker__form" autocomplete="off">
+          <div class="checker__row">
+            <label for="dmarc-policy" class="checker__label">Policy (p)</label>
+            <select id="dmarc-policy" class="checker__input">
+              <option value="none">none &mdash; monitor only (start here)</option>
+              <option value="quarantine">quarantine &mdash; failing mail to spam</option>
+              <option value="reject">reject &mdash; failing mail refused (end goal)</option>
+            </select>
+          </div>
+          <div class="checker__row">
+            <label for="dmarc-rua" class="checker__label">Aggregate report address (rua)</label>
+            <input type="email" id="dmarc-rua" class="checker__input" placeholder="dmarc-reports@yourdomain.com" required>
+          </div>
+          <div class="checker__row">
+            <label for="dmarc-pct" class="checker__label">Percentage of mail policy applies to (pct)</label>
+            <input type="number" id="dmarc-pct" class="checker__input" value="100" min="1" max="100">
+          </div>
+          <div class="checker__row">
+            <label for="dmarc-sp" class="checker__label">Subdomain policy (sp)</label>
+            <select id="dmarc-sp" class="checker__input">
+              <option value="">same as p (default)</option>
+              <option value="none">none</option>
+              <option value="quarantine">quarantine</option>
+              <option value="reject">reject</option>
+            </select>
+          </div>
+          <fieldset class="checker__row" style="border: none;">
+            <legend class="checker__label">Strict alignment <span class="checker__optional">(leave unchecked unless you know you need it)</span></legend>
+            <label class="tool-check"><input type="checkbox" id="dmarc-adkim"> Strict DKIM alignment (adkim=s)</label>
+            <label class="tool-check"><input type="checkbox" id="dmarc-aspf"> Strict SPF alignment (aspf=s)</label>
+          </fieldset>
+          <button type="submit" class="btn btn--primary">Generate</button>
+        </form>
+        <div id="dmarc-output" hidden>
+          <h2 class="tool-subhead">Your DMARC record</h2>
+          <p class="checker__hint">Publish as a TXT record at <code>_dmarc.yourdomain.com</code>.</p>
+          <pre class="tool-record" id="dmarc-record"></pre>
+          <button type="button" class="btn btn--outline" id="dmarc-copy">Copy</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer__inner">
+      <p>&copy; <span id="footer-year">2026</span> Andrew Minga. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/tools.js"></script>
+</body>
+</html>

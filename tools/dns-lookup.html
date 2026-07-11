@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free DNS Lookup: All Record Types | Andrew Minga</title>
+  <meta name="description" content="Look up A, AAAA, CNAME, MX, TXT, NS, SOA, SRV, CAA, PTR, and DNSSEC records for any domain. Free, instant, browser-based.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://mingasolutions.com/tools/dns-lookup.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Free DNS Lookup: All Record Types">
+  <meta property="og:description" content="Look up A, AAAA, CNAME, MX, TXT, NS, SOA, SRV, CAA, PTR, and DNSSEC records for any domain. Free, instant, browser-based.">
+  <meta property="og:image" content="https://mingasolutions.com/assets/og-preview.jpg">
+  <meta property="og:url" content="https://mingasolutions.com/tools/dns-lookup.html">
+  <link rel="preload" href="../assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="nav__logo" href="../index.html" aria-label="Andrew Minga home">AM</a>
+      <button
+        class="nav__hamburger"
+        aria-controls="mobile-nav"
+        aria-expanded="false"
+        aria-label="Open navigation menu"
+      >
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+      <ul class="nav__links" id="mobile-nav" role="list">
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="index.html" class="is-active" aria-current="page">Tools</a></li>
+        <li><a href="../blog/index.html">Blog</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+        <li><a href="../interests.html">Interests</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="section case">
+      <div class="container case__inner">
+        <p class="case__breadcrumb"><a href="index.html">&larr; All tools</a></p>
+        <p class="hero__eyebrow">Free tool · runs in your browser</p>
+        <h1 class="case__title">DNS Lookup</h1>
+        <p style="color: var(--color-text-muted); line-height: 1.7; margin-bottom: 2rem;">Query any DNS record type via Cloudflare's public resolver. For PTR (reverse) lookups, enter an IP address.</p>
+        <form id="dns-form" class="checker__form" autocomplete="off">
+          <div class="checker__row">
+            <label for="dns-name" class="checker__label">Domain or IP</label>
+            <input type="text" id="dns-name" class="checker__input" placeholder="example.com" required spellcheck="false">
+          </div>
+          <div class="checker__row">
+            <label for="dns-type" class="checker__label">Record type</label>
+            <select id="dns-type" class="checker__input">
+              <option>A</option><option>AAAA</option><option>CNAME</option><option>MX</option>
+              <option>TXT</option><option>NS</option><option>SOA</option><option>SRV</option>
+              <option>CAA</option><option>PTR</option><option>DNSKEY</option><option>DS</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn--primary">Look Up</button>
+        </form>
+        <div id="dns-status" class="checker__status" role="status" aria-live="polite"></div>
+        <div id="dns-results" hidden>
+          <table class="tool-table" aria-label="DNS results">
+            <thead><tr><th>Name</th><th>Type</th><th>TTL</th><th>Data</th></tr></thead>
+            <tbody id="dns-rows"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer__inner">
+      <p>&copy; <span id="footer-year">2026</span> Andrew Minga. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/tools.js"></script>
+</body>
+</html>

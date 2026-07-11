@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WHOIS / RDAP Lookup: Domain and IP Ownership | Andrew Minga</title>
+  <meta name="description" content="Free WHOIS lookup via RDAP: registrar, registration dates, nameservers, and status for domains; ownership for IP addresses.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://mingasolutions.com/tools/whois-lookup.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="WHOIS / RDAP Lookup: Domain and IP Ownership">
+  <meta property="og:description" content="Free WHOIS lookup via RDAP: registrar, registration dates, nameservers, and status for domains; ownership for IP addresses.">
+  <meta property="og:image" content="https://mingasolutions.com/assets/og-preview.jpg">
+  <meta property="og:url" content="https://mingasolutions.com/tools/whois-lookup.html">
+  <link rel="preload" href="../assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="nav__logo" href="../index.html" aria-label="Andrew Minga home">AM</a>
+      <button
+        class="nav__hamburger"
+        aria-controls="mobile-nav"
+        aria-expanded="false"
+        aria-label="Open navigation menu"
+      >
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+      <ul class="nav__links" id="mobile-nav" role="list">
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="index.html" class="is-active" aria-current="page">Tools</a></li>
+        <li><a href="../blog/index.html">Blog</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+        <li><a href="../interests.html">Interests</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="section case">
+      <div class="container case__inner">
+        <p class="case__breadcrumb"><a href="index.html">&larr; All tools</a></p>
+        <p class="hero__eyebrow">Free tool · runs in your browser</p>
+        <h1 class="case__title">WHOIS / RDAP Lookup</h1>
+        <p style="color: var(--color-text-muted); line-height: 1.7; margin-bottom: 2rem;">Registration data via RDAP, the structured JSON successor to WHOIS. Works for domains and IP addresses. Some country-code TLD registries do not permit browser queries; those need a full WHOIS client.</p>
+        <form id="whois-form" class="checker__form" autocomplete="off">
+          <div class="checker__row">
+            <label for="whois-input" class="checker__label">Domain or IP</label>
+            <input type="text" id="whois-input" class="checker__input" placeholder="example.com or 104.21.68.251" required spellcheck="false">
+          </div>
+          <button type="submit" class="btn btn--primary">Look Up</button>
+        </form>
+        <div id="whois-status" class="checker__status" role="status" aria-live="polite"></div>
+        <div id="whois-results" hidden>
+          <table class="tool-table" aria-label="Registration data"><tbody id="whois-rows"></tbody></table>
+          <details class="tool-raw"><summary>Raw RDAP response</summary><pre id="whois-raw"></pre></details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer__inner">
+      <p>&copy; <span id="footer-year">2026</span> Andrew Minga. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/tools.js"></script>
+</body>
+</html>

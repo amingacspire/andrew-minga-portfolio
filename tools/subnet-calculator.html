@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IPv4 Subnet Calculator | Andrew Minga</title>
+  <meta name="description" content="Network address, broadcast, usable host range, host count, subnet mask, and wildcard from any IPv4 address and CIDR prefix.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://mingasolutions.com/tools/subnet-calculator.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="IPv4 Subnet Calculator">
+  <meta property="og:description" content="Network address, broadcast, usable host range, host count, subnet mask, and wildcard from any IPv4 address and CIDR prefix.">
+  <meta property="og:image" content="https://mingasolutions.com/assets/og-preview.jpg">
+  <meta property="og:url" content="https://mingasolutions.com/tools/subnet-calculator.html">
+  <link rel="preload" href="../assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="nav__logo" href="../index.html" aria-label="Andrew Minga home">AM</a>
+      <button
+        class="nav__hamburger"
+        aria-controls="mobile-nav"
+        aria-expanded="false"
+        aria-label="Open navigation menu"
+      >
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+      <ul class="nav__links" id="mobile-nav" role="list">
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="index.html" class="is-active" aria-current="page">Tools</a></li>
+        <li><a href="../blog/index.html">Blog</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+        <li><a href="../interests.html">Interests</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="section case">
+      <div class="container case__inner">
+        <p class="case__breadcrumb"><a href="index.html">&larr; All tools</a></p>
+        <p class="hero__eyebrow">Free tool · runs in your browser</p>
+        <h1 class="case__title">Subnet Calculator</h1>
+        <p style="color: var(--color-text-muted); line-height: 1.7; margin-bottom: 2rem;">IPv4 subnetting from an address and prefix length. All math happens locally.</p>
+        <form id="subnet-form" class="checker__form" autocomplete="off">
+          <div class="checker__row">
+            <label for="subnet-ip" class="checker__label">IP address / CIDR</label>
+            <input type="text" id="subnet-ip" class="checker__input" placeholder="192.168.10.0/24" required spellcheck="false">
+          </div>
+          <button type="submit" class="btn btn--primary">Calculate</button>
+        </form>
+        <div id="subnet-status" class="checker__status" role="status" aria-live="polite"></div>
+        <div id="subnet-results" hidden>
+          <table class="tool-table" aria-label="Subnet details"><tbody id="subnet-rows"></tbody></table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer__inner">
+      <p>&copy; <span id="footer-year">2026</span> Andrew Minga. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/tools.js"></script>
+</body>
+</html>

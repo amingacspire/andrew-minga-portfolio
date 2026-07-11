@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IT Ops Tools: DNS, Email Security, WHOIS | Andrew Minga</title>
+  <meta name="description" content="Free browser-based IT tools: email security checker, DNS lookup, WHOIS/RDAP, header analyzer, SPF and DMARC generators, subnet calculator. No signup, nothing logged.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://mingasolutions.com/tools/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="IT Ops Tools: DNS, Email Security, WHOIS">
+  <meta property="og:description" content="Free browser-based IT tools: email security checker, DNS lookup, WHOIS/RDAP, header analyzer, SPF and DMARC generators, subnet calculator. No signup, nothing logged.">
+  <meta property="og:image" content="https://mingasolutions.com/assets/og-preview.jpg">
+  <meta property="og:url" content="https://mingasolutions.com/tools/">
+  <link rel="preload" href="../assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="nav__logo" href="../index.html" aria-label="Andrew Minga home">AM</a>
+      <button
+        class="nav__hamburger"
+        aria-controls="mobile-nav"
+        aria-expanded="false"
+        aria-label="Open navigation menu"
+      >
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+      <ul class="nav__links" id="mobile-nav" role="list">
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="index.html" class="is-active" aria-current="page">Tools</a></li>
+        <li><a href="../blog/index.html">Blog</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+        <li><a href="../interests.html">Interests</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="section case">
+      <div class="container case__inner">
+        <p class="hero__eyebrow">Free tools &middot; no signup &middot; nothing logged</p>
+        <h1 class="case__title">IT Ops Tools</h1>
+        <p style="color: var(--color-text-muted); line-height: 1.7; margin-bottom: 2rem;">
+          Browser-based utilities for the checks IT pros run every day. Everything executes
+          client-side against public APIs (Cloudflare DNS-over-HTTPS, registry RDAP); nothing you
+          enter is stored, logged, or sent to this server.
+        </p>
+        <div class="projects__grid" style="max-width: none;">
+          <a class="project-card tool-card" href="email-security-checker.html">
+            <div class="project-card__tag">Email Security</div>
+            <h2 class="project-card__title">Email Security Checker</h2>
+            <p class="project-card__desc">SPF, DMARC, DKIM (33-selector discovery), MX, BIMI, MTA-STS, and TLS-RPT with plain-language fixes.</p>
+          </a>
+          <a class="project-card tool-card" href="dns-lookup.html">
+            <div class="project-card__tag">DNS</div>
+            <h2 class="project-card__title">DNS Lookup</h2>
+            <p class="project-card__desc">Query any record type: A, AAAA, CNAME, MX, TXT, NS, SOA, SRV, CAA, PTR, and DNSSEC records.</p>
+          </a>
+          <a class="project-card tool-card" href="whois-lookup.html">
+            <div class="project-card__tag">Registry</div>
+            <h2 class="project-card__title">WHOIS / RDAP Lookup</h2>
+            <p class="project-card__desc">Domain registration and IP ownership data via RDAP, the structured successor to WHOIS.</p>
+          </a>
+          <a class="project-card tool-card" href="email-header-analyzer.html">
+            <div class="project-card__tag">Email Security</div>
+            <h2 class="project-card__title">Email Header Analyzer</h2>
+            <p class="project-card__desc">Paste raw headers: hop-by-hop delivery path with delays, authentication results, and spoofing red flags.</p>
+          </a>
+          <a class="project-card tool-card" href="spf-generator.html">
+            <div class="project-card__tag">Generator</div>
+            <h2 class="project-card__title">SPF Record Generator</h2>
+            <p class="project-card__desc">Build a correct SPF record from your senders, with the 10-lookup limit counted for you.</p>
+          </a>
+          <a class="project-card tool-card" href="dmarc-generator.html">
+            <div class="project-card__tag">Generator</div>
+            <h2 class="project-card__title">DMARC Record Generator</h2>
+            <p class="project-card__desc">Build a DMARC record with sane policy progression, reporting addresses, and alignment options.</p>
+          </a>
+          <a class="project-card tool-card" href="subnet-calculator.html">
+            <div class="project-card__tag">Network</div>
+            <h2 class="project-card__title">Subnet Calculator</h2>
+            <p class="project-card__desc">IPv4 network, broadcast, usable range, host count, and wildcard mask from any IP/CIDR.</p>
+          </a>
+          <a class="project-card tool-card" href="whats-my-ip.html">
+            <div class="project-card__tag">Network</div>
+            <h2 class="project-card__title">What's My IP</h2>
+            <p class="project-card__desc">Your public IP and connection details, served by this site's own edge. Nothing logged.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer__inner">
+      <p>&copy; <span id="footer-year">2026</span> Andrew Minga. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/tools.js"></script>
+</body>
+</html>

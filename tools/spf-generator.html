@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SPF Record Generator | Andrew Minga</title>
+  <meta name="description" content="Build a correct SPF record from your mail senders, with the 10-DNS-lookup limit counted automatically. Free and instant.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://mingasolutions.com/tools/spf-generator.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="SPF Record Generator">
+  <meta property="og:description" content="Build a correct SPF record from your mail senders, with the 10-DNS-lookup limit counted automatically. Free and instant.">
+  <meta property="og:image" content="https://mingasolutions.com/assets/og-preview.jpg">
+  <meta property="og:url" content="https://mingasolutions.com/tools/spf-generator.html">
+  <link rel="preload" href="../assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="nav__logo" href="../index.html" aria-label="Andrew Minga home">AM</a>
+      <button
+        class="nav__hamburger"
+        aria-controls="mobile-nav"
+        aria-expanded="false"
+        aria-label="Open navigation menu"
+      >
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+      <ul class="nav__links" id="mobile-nav" role="list">
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="index.html" class="is-active" aria-current="page">Tools</a></li>
+        <li><a href="../blog/index.html">Blog</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+        <li><a href="../interests.html">Interests</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="section case">
+      <div class="container case__inner">
+        <p class="case__breadcrumb"><a href="index.html">&larr; All tools</a></p>
+        <p class="hero__eyebrow">Free tool · runs in your browser</p>
+        <h1 class="case__title">SPF Record Generator</h1>
+        <p style="color: var(--color-text-muted); line-height: 1.7; margin-bottom: 2rem;">Pick your senders, get a correct record. SPF allows at most 10 DNS lookups; the counter below tracks how close your record is.</p>
+        <form id="spf-form" class="checker__form" autocomplete="off">
+          <fieldset class="checker__row" style="border: none;">
+            <legend class="checker__label">Mail platforms</legend>
+            <label class="tool-check"><input type="checkbox" id="spf-m365"> Microsoft 365 <code>include:spf.protection.outlook.com</code></label>
+            <label class="tool-check"><input type="checkbox" id="spf-google"> Google Workspace <code>include:_spf.google.com</code></label>
+          </fieldset>
+          <div class="checker__row">
+            <label for="spf-includes" class="checker__label">Other includes <span class="checker__optional">(one per line, e.g. sendgrid.net)</span></label>
+            <textarea id="spf-includes" class="checker__input tool-textarea" rows="2" spellcheck="false"></textarea>
+          </div>
+          <div class="checker__row">
+            <label for="spf-ips" class="checker__label">Server IPs <span class="checker__optional">(one per line, IPv4 or CIDR, e.g. 203.0.113.5)</span></label>
+            <textarea id="spf-ips" class="checker__input tool-textarea" rows="2" spellcheck="false"></textarea>
+          </div>
+          <div class="checker__row">
+            <label for="spf-all" class="checker__label">Failure policy</label>
+            <select id="spf-all" class="checker__input">
+              <option value="-all">-all &mdash; hard fail (recommended once senders are confirmed)</option>
+              <option value="~all">~all &mdash; soft fail (safe starting point)</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn--primary">Generate</button>
+        </form>
+        <div id="spf-output" hidden>
+          <h2 class="tool-subhead">Your SPF record <span id="spf-lookups" class="checker__hint"></span></h2>
+          <p class="checker__hint">Publish as a TXT record on the root of your domain (@).</p>
+          <pre class="tool-record" id="spf-record"></pre>
+          <button type="button" class="btn btn--outline" id="spf-copy">Copy</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer__inner">
+      <p>&copy; <span id="footer-year">2026</span> Andrew Minga. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/tools.js"></script>
+</body>
+</html>

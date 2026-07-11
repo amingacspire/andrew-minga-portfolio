@@ -200,7 +200,7 @@
           '  resume      download the resume (PDF)',
           '  contact     jump to contact options',
           '  blog        open the blog',
-          '  tools       open the email security checker',
+          '  tools       open the tools hub',
           '  clear       clear the screen',
           '  exit        return to the demo loop'
         ].join('\n'));
@@ -225,8 +225,8 @@
         setTimeout(function () { window.location.href = 'blog/index.html'; }, 400);
       },
       'tools': function () {
-        print('Opening email security checker...');
-        setTimeout(function () { window.location.href = 'tools/email-security-checker.html'; }, 400);
+        print('Opening tools hub...');
+        setTimeout(function () { window.location.href = 'tools/index.html'; }, 400);
       },
       'clear': function () { lines = []; },
       'exit': function () {
