@@ -1,0 +1,53 @@
+name: LinkedIn Crosspost
+
+# Fires when a new blog post lands on master AND the commit message contains
+# [crosspost]. Posting is explicit opt-in per commit; pushing a post without
+# the tag publishes to the site only.
+#
+# Required repo secrets:
+#   LINKEDIN_ACCESS_TOKEN  - member token with w_member_social scope
+#                            (expires every 60 days; manual rotation)
+#   LINKEDIN_AUTHOR_URN    - urn:li:person:XXXX for the posting member
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'blog/posts/**.html'
+  workflow_dispatch:
+    inputs:
+      post_file:
+        description: 'Path to post HTML file (e.g. blog/posts/my-post.html)'
+        required: true
+
+jobs:
+  crosspost:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[crosspost]')
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Determine post file
+        id: post
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "file=${{ github.event.inputs.post_file }}" >> "$GITHUB_OUTPUT"
+          else
+            FILE=$(git diff --name-only --diff-filter=A HEAD~1 HEAD -- 'blog/posts/*.html' | head -1)
+            if [ -z "$FILE" ]; then
+              echo "No newly added post file found; nothing to crosspost."
+              echo "file=" >> "$GITHUB_OUTPUT"
+            else
+              echo "file=$FILE" >> "$GITHUB_OUTPUT"
+            fi
+          fi
+
+      - name: Post to LinkedIn
+        if: steps.post.outputs.file != ''
+        env:
+          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+          LINKEDIN_AUTHOR_URN: ${{ secrets.LINKEDIN_AUTHOR_URN }}
+          POST_FILE: ${{ steps.post.outputs.file }}
+        run: node scripts/linkedin-crosspost.mjs

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Building This Site with Claude Code | Andrew Minga</title>
+  <meta name="description" content="No framework, no build system, no CMS. What an AI-assisted static site build actually looks like and where human judgment still lives.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://mingasolutions.com/blog/posts/building-this-site-with-claude-code.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Building This Site with Claude Code">
+  <meta property="og:description" content="No framework, no build system, no CMS. What an AI-assisted static site build actually looks like.">
+  <meta property="og:image" content="https://mingasolutions.com/assets/og-preview.jpg">
+  <meta property="og:url" content="https://mingasolutions.com/blog/posts/building-this-site-with-claude-code.html">
+  <meta property="article:published_time" content="2026-07-11">
+  <link rel="preload" href="../../assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="nav__logo" href="../../index.html" aria-label="Andrew Minga home">AM</a>
+      <button
+        class="nav__hamburger"
+        aria-controls="mobile-nav"
+        aria-expanded="false"
+        aria-label="Open navigation menu"
+      >
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+      <ul class="nav__links" id="mobile-nav" role="list">
+        <li><a href="../../index.html#about">About</a></li>
+        <li><a href="../../index.html#experience">Experience</a></li>
+        <li><a href="../../index.html#skills">Skills</a></li>
+        <li><a href="../../index.html#projects">Projects</a></li>
+        <li><a href="../index.html" class="is-active">Blog</a></li>
+        <li><a href="../../index.html#contact">Contact</a></li>
+        <li><a href="../../interests.html">Interests</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <article class="section case">
+      <div class="container case__inner">
+        <p class="case__breadcrumb"><a href="../index.html">&larr; All posts</a></p>
+        <h1 class="case__title">Building This Site with Claude Code</h1>
+        <p class="case__meta">July 11, 2026 &middot; Andrew Minga</p>
+
+        <p>
+          This site has no framework, no build system, and no CMS. Static HTML, one CSS file, vanilla
+          JavaScript, deployed on Cloudflare Pages. Most of it was written by Claude Code with me
+          directing. Here is what that workflow actually looks like, because the reality is more
+          interesting than the hype in either direction.
+        </p>
+
+        <h2>What the AI did well</h2>
+        <p>
+          Volume and consistency. The particle animation, the terminal typing effect, the responsive
+          grid layouts, the accessibility plumbing (skip links, focus traps, aria attributes,
+          prefers-reduced-motion handling): all generated fast and correct enough that my job was
+          review, not rework. When the skills section layout broke after adding a fifth group, the
+          fix came from describing the symptom, not from me reading CSS specs.
+        </p>
+
+        <h2>Where human judgment still lives</h2>
+        <p>
+          Everything that touches truth and taste. Which projects to feature and what I could say
+          about them publicly. Whether a claimed certification date was right. Whether a generated
+          sentence sounded like me or like a press release. The AI drafted; I vetoed. On a portfolio
+          site, the vetoes are the product.
+        </p>
+        <p>
+          Security judgment stayed human too. Before this repo went public, the full git history got
+          scanned for secrets and personal data. The scan was automated; the decision about what
+          counts as acceptable exposure was not.
+        </p>
+
+        <h2>The honest math</h2>
+        <p>
+          This site would have taken me a few weekends solo. It took a few evenings instead, and the
+          quality is higher than what I would have shipped alone, mostly in the places I would have
+          cut corners: accessibility, Open Graph tags, structured data. That is the real value
+          proposition. Not magic, just a very fast pair who never gets bored of the boring parts.
+        </p>
+
+        <p>
+          The source is public if you want to see exactly what came out of this workflow:
+          <a href="https://github.com/amingacspire/andrew-minga-portfolio" target="_blank" rel="noopener noreferrer">github.com/amingacspire/andrew-minga-portfolio</a>.
+        </p>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer__inner">
+      <p>&copy; <span id="footer-year">2026</span> Andrew Minga. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+</body>
+</html>
