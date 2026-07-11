@@ -1188,6 +1188,28 @@ ul { list-style: none; }
   color: var(--color-accent);
 }
 
+.post-source {
+  margin: var(--space-sm) 0;
+}
+
+.post-source a {
+  display: inline-block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  background: var(--color-placeholder);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 0.35rem 0.9rem;
+  text-decoration: none;
+  transition: color var(--transition), border-color var(--transition);
+}
+
+.post-source a:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
 /* =========================================================
    Blog list
    ========================================================= */
