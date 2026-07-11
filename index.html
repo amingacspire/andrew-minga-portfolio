@@ -113,6 +113,7 @@
         <li><a href="#about">About</a></li>
         <li><a href="#experience">Experience</a></li>
         <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
         <li><a href="#contact">Contact</a></li>
         <li><a href="interests.html">Interests</a></li>
       </ul>
@@ -128,6 +129,7 @@
         <p class="hero__eyebrow">Hello, I'm</p>
         <h1 class="hero__name">Andrew Minga</h1>
         <p class="hero__tagline">IT Leader&nbsp;&nbsp;|&nbsp;&nbsp;M365&nbsp;&nbsp;|&nbsp;&nbsp;Azure&nbsp;&nbsp;|&nbsp;&nbsp;Security</p>
+        <p class="hero__now"><span class="hero__now-label">Now</span> Leading Customer Experience Engineering at C Spire and building AI-powered automation for MSP operations.</p>
         <div class="hero__cta">
           <a href="#experience" class="btn btn--primary">View Experience</a>
           <a
@@ -419,40 +421,118 @@
           <h3 class="skills__group-title">Certifications</h3>
           <ul class="skills__cert-grid" role="list">
             <li class="skills__item skills__item--cert">
-              <span class="cert__name">AZ-305 Solutions Architect Expert</span>
-              <span class="cert__issuer">Microsoft &middot; Oct 2025</span>
+              <img src="assets/ms-badge-expert.svg" alt="" class="cert__badge" width="48" height="48" loading="lazy">
+              <div class="cert__text">
+                <span class="cert__name">AZ-305 Solutions Architect Expert</span>
+                <span class="cert__issuer">Microsoft &middot; Oct 2025</span>
+                <a href="https://learn.microsoft.com/api/credentials/share/en-us/AndrewMinga-3669/301227016F2027E9?sharingId=FA86F7E01F676CE3" class="cert__verify" target="_blank" rel="noopener noreferrer">Verify credential</a>
+              </div>
             </li>
             <li class="skills__item skills__item--cert">
-              <span class="cert__name">AZ-104 Azure Administrator Associate</span>
-              <span class="cert__issuer">Microsoft &middot; Jul 2025</span>
+              <img src="assets/ms-badge-associate.svg" alt="" class="cert__badge" width="48" height="48" loading="lazy">
+              <div class="cert__text">
+                <span class="cert__name">AZ-104 Azure Administrator Associate</span>
+                <span class="cert__issuer">Microsoft &middot; Jul 2025</span>
+              </div>
             </li>
             <li class="skills__item skills__item--cert">
-              <span class="cert__name">AZ-140 Azure Virtual Desktop Specialty</span>
-              <span class="cert__issuer">Microsoft &middot; Jul 2025</span>
+              <img src="assets/ms-badge-specialty.svg" alt="" class="cert__badge" width="48" height="48" loading="lazy">
+              <div class="cert__text">
+                <span class="cert__name">AZ-140 Azure Virtual Desktop Specialty</span>
+                <span class="cert__issuer">Microsoft &middot; Jul 2025</span>
+              </div>
             </li>
             <li class="skills__item skills__item--cert">
-              <span class="cert__name">AZ-900 Azure Fundamentals</span>
-              <span class="cert__issuer">Microsoft &middot; May 2024</span>
+              <img src="assets/ms-badge-fundamentals.svg" alt="" class="cert__badge" width="48" height="48" loading="lazy">
+              <div class="cert__text">
+                <span class="cert__name">AZ-900 Azure Fundamentals</span>
+                <span class="cert__issuer">Microsoft &middot; May 2024</span>
+              </div>
             </li>
             <li class="skills__item skills__item--cert">
-              <span class="cert__name">Claude Code in Action</span>
-              <span class="cert__issuer">Anthropic &middot; Jul 2026</span>
+              <div class="cert__text">
+                <span class="cert__name">Claude Code in Action</span>
+                <span class="cert__issuer">Anthropic &middot; Jul 2026</span>
+              </div>
             </li>
             <li class="skills__item skills__item--cert">
-              <span class="cert__name">Claude Code 101</span>
-              <span class="cert__issuer">Anthropic &middot; Jul 2026</span>
+              <div class="cert__text">
+                <span class="cert__name">Claude Code 101</span>
+                <span class="cert__issuer">Anthropic &middot; Jul 2026</span>
+              </div>
             </li>
             <li class="skills__item skills__item--cert">
-              <span class="cert__name">Claude 101</span>
-              <span class="cert__issuer">Anthropic &middot; Jul 2026</span>
+              <div class="cert__text">
+                <span class="cert__name">Claude 101</span>
+                <span class="cert__issuer">Anthropic &middot; Jul 2026</span>
+              </div>
             </li>
             <li class="skills__item skills__item--cert">
-              <span class="cert__name">Introduction to Claude Cowork</span>
-              <span class="cert__issuer">Anthropic &middot; Jul 2026</span>
+              <div class="cert__text">
+                <span class="cert__name">Introduction to Claude Cowork</span>
+                <span class="cert__issuer">Anthropic &middot; Jul 2026</span>
+              </div>
             </li>
           </ul>
         </div>
 
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="projects section" aria-labelledby="projects-heading">
+      <div class="container">
+        <h2 id="projects-heading" class="section__title section__title--centered">Automation Projects</h2>
+        <div class="projects__grid">
+
+          <article class="project-card">
+            <div class="project-card__tag">MSP Automation</div>
+            <h3 class="project-card__title">Self-Service Password Reset at Scale</h3>
+            <p class="project-card__desc">
+              Designed and validated an automated password reset workflow spanning 100+ managed client
+              organizations. Integrates the ticketing system, RMM platform, and Microsoft 365 so end users
+              get secure resets in minutes instead of waiting on a help desk queue.
+            </p>
+            <ul class="project-card__stack" role="list">
+              <li>Rewst</li>
+              <li>ServiceNow</li>
+              <li>Datto RMM</li>
+              <li>Microsoft Graph</li>
+            </ul>
+          </article>
+
+          <article class="project-card">
+            <div class="project-card__tag">AI Operations</div>
+            <h3 class="project-card__title">AI-Assisted Operations Platform</h3>
+            <p class="project-card__desc">
+              Built a custom Model Context Protocol (MCP) server connecting Claude to the vendor APIs an MSP
+              runs on: ticketing, documentation, networking, firewalls, RMM, and licensing. Turns hours of
+              cross-portal swivel-chair work into single conversational requests.
+            </p>
+            <ul class="project-card__stack" role="list">
+              <li>Claude Code</li>
+              <li>MCP</li>
+              <li>Node.js</li>
+              <li>10+ vendor APIs</li>
+            </ul>
+          </article>
+
+          <article class="project-card">
+            <div class="project-card__tag">Security</div>
+            <h3 class="project-card__title">Fleet-Wide Vulnerability Assessment</h3>
+            <p class="project-card__desc">
+              When a critical firewall vulnerability dropped, built PowerShell tooling that assessed 480+
+              customer domains in hours, identified the exposed subset, and produced per-client risk
+              reports so remediation could start the same day.
+            </p>
+            <ul class="project-card__stack" role="list">
+              <li>PowerShell</li>
+              <li>REST APIs</li>
+              <li>Risk Reporting</li>
+            </ul>
+          </article>
+
+        </div>
       </div>
     </section>
 
