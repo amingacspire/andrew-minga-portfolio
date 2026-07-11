@@ -1167,7 +1167,8 @@ ul { list-style: none; }
 }
 
 .case ul {
-  padding-left: 1.2rem;
+  list-style: disc;
+  padding-left: 1.4rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -1177,6 +1178,10 @@ ul { list-style: none; }
   font-size: 0.95rem;
   line-height: 1.65;
   color: var(--color-text-muted);
+}
+
+.case li::marker {
+  color: var(--color-accent);
 }
 
 .case a {
