@@ -871,7 +871,8 @@ ul { list-style: none; }
   padding: var(--space-sm);
   min-height: 180px;
   max-height: 220px;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .terminal__code {
@@ -1209,6 +1210,140 @@ ul { list-style: none; }
   color: var(--color-accent);
   border-color: var(--color-accent);
 }
+
+/* =========================================================
+   Email security checker tool
+   ========================================================= */
+.checker__form {
+  background: var(--color-placeholder);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  max-width: 560px;
+}
+
+.checker__row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.checker__label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.checker__optional {
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.checker__input {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--color-text);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 0.9rem;
+}
+
+.checker__input:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+  border-color: var(--color-accent);
+}
+
+.checker__hint {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.checker__form .btn { align-self: flex-start; }
+
+.checker__status {
+  margin-top: var(--space-sm);
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  min-height: 1.4em;
+}
+
+.check-card {
+  border: 1px solid var(--color-border);
+  border-left-width: 4px;
+  border-radius: var(--radius-sm);
+  background: var(--color-placeholder);
+  padding: var(--space-sm) var(--space-md);
+  margin-bottom: var(--space-sm);
+}
+
+.check-card--pass { border-left-color: #2ecc71; }
+.check-card--warn { border-left-color: #f1c40f; }
+.check-card--fail { border-left-color: #e74c3c; }
+
+.check-card__head {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 0.4rem;
+}
+
+.check-card__chip {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  border-radius: 4px;
+  padding: 0.15rem 0.5rem;
+  color: var(--color-bg);
+}
+
+.check-card--pass .check-card__chip { background: #2ecc71; }
+.check-card--warn .check-card__chip { background: #f1c40f; }
+.check-card--fail .check-card__chip { background: #e74c3c; }
+
+.check-card__title {
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.check-card__value {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  background: var(--color-bg);
+  border-radius: 4px;
+  padding: 0.4rem 0.6rem;
+  margin: 0.35rem 0;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.check-card__note {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+.check-card__note code {
+  color: var(--color-accent);
+  font-size: 0.82em;
+}
+
+.checker__disclaimer {
+  margin-top: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+.checker__disclaimer a { color: var(--color-accent); }
 
 /* =========================================================
    Blog list

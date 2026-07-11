@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Email Security Checker: SPF, DMARC, DKIM | Andrew Minga</title>
+  <meta name="description" content="Check any domain's email security posture in seconds: SPF, DMARC, DKIM, and MX records with plain-language fixes. Free, no signup, runs in your browser.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://mingasolutions.com/tools/email-security-checker.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Free Email Security Checker: SPF, DMARC, DKIM">
+  <meta property="og:description" content="Check any domain's email security posture in seconds. Free, no signup, runs in your browser.">
+  <meta property="og:image" content="https://mingasolutions.com/assets/og-preview.jpg">
+  <meta property="og:url" content="https://mingasolutions.com/tools/email-security-checker.html">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Email Security Checker",
+    "url": "https://mingasolutions.com/tools/email-security-checker.html",
+    "applicationCategory": "SecurityApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "author": { "@type": "Person", "name": "Andrew Minga", "url": "https://mingasolutions.com" }
+  }
+  </script>
+  <link rel="preload" href="../assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="nav__logo" href="../index.html" aria-label="Andrew Minga home">AM</a>
+      <button
+        class="nav__hamburger"
+        aria-controls="mobile-nav"
+        aria-expanded="false"
+        aria-label="Open navigation menu"
+      >
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+      <ul class="nav__links" id="mobile-nav" role="list">
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="email-security-checker.html" class="is-active" aria-current="page">Tools</a></li>
+        <li><a href="../blog/index.html">Blog</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+        <li><a href="../interests.html">Interests</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="section case">
+      <div class="container case__inner">
+        <p class="hero__eyebrow">Free tool &middot; runs in your browser</p>
+        <h1 class="case__title">Email Security Checker</h1>
+        <p style="color: var(--color-text-muted); line-height: 1.7; margin-bottom: 2rem;">
+          Checks a domain's SPF, DMARC, DKIM, and MX records live and explains what the results
+          mean in plain language. Read-only DNS lookups via Cloudflare's public resolver;
+          nothing is stored, logged, or sent anywhere else.
+        </p>
+
+        <form id="checker-form" class="checker__form" autocomplete="off">
+          <div class="checker__row">
+            <label for="domain-input" class="checker__label">Domain</label>
+            <input type="text" id="domain-input" class="checker__input" placeholder="example.com" required
+                   inputmode="url" spellcheck="false" aria-describedby="domain-hint">
+          </div>
+          <div class="checker__row">
+            <label for="selector-input" class="checker__label">DKIM selector <span class="checker__optional">(optional)</span></label>
+            <input type="text" id="selector-input" class="checker__input" placeholder="selector1"
+                   spellcheck="false" aria-describedby="selector-hint">
+          </div>
+          <p id="domain-hint" class="checker__hint">
+            No selector? The Microsoft 365 defaults (selector1, selector2) are tried automatically.
+          </p>
+          <button type="submit" class="btn btn--primary" id="check-btn">Run Check</button>
+        </form>
+
+        <div id="checker-status" class="checker__status" role="status" aria-live="polite"></div>
+
+        <div id="checker-results" class="checker__results" hidden>
+          <h2 style="color: var(--color-accent); font-size: 1.2rem; margin: 2rem 0 1rem;">Results for <span id="result-domain"></span></h2>
+          <div id="result-cards"></div>
+          <div class="checker__disclaimer">
+            <p>
+              <strong>Read the fine print:</strong> a missing DKIM result on the default selectors is not
+              conclusive; the domain may sign with a custom selector. DMARC <code>p=none</code> is monitoring,
+              not protection. Third-party senders (marketing platforms, ticketing systems) each need their own
+              SPF include and DKIM selector, so one passing check does not mean every mail stream is covered.
+            </p>
+            <p style="margin-top: 0.75rem;">
+              Want help interpreting results for your organization?
+              <a href="../index.html#contact">Get in touch</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer__inner">
+      <p>&copy; <span id="footer-year">2026</span> Andrew Minga. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/email-checker.js"></script>
+</body>
+</html>

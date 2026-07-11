@@ -119,7 +119,7 @@
     drawCanvas();
   }
 
-  // ── Terminal typing animation ──────────────────────────────────
+  // ── Terminal: typing animation + interactive mode ──────────────
   const terminalEl = document.getElementById('terminal-code');
   if (terminalEl) {
     const snippets = [
@@ -128,26 +128,180 @@
       '// host-pool.bicep\nresource pool \'Microsoft.DesktopVirtualization/hostPools@2022-09-09\' = {\n  name: \'csb-avd-pool\'\n  location: resourceGroup().location\n  properties: {\n    hostPoolType:     \'Pooled\'\n    maxSessionLimit:  10\n    loadBalancerType: \'BreadthFirst\'\n  }\n}'
     ];
 
-    if (prefersReducedMotion) {
-      terminalEl.textContent = snippets[0];
-    } else {
+    let animating = false;
+    let animTimer = null;
+
+    function startAnimation() {
+      if (prefersReducedMotion) {
+        terminalEl.textContent = snippets[0] + '\n\n# Click here to try interactive mode';
+        return;
+      }
+      animating = true;
       let si = 0, ci = 0;
       function typeChar() {
+        if (!animating) return;
         const text = snippets[si];
         if (ci <= text.length) {
           terminalEl.textContent = text.slice(0, ci++);
-          setTimeout(typeChar, ci === 1 ? 900 : 28 + Math.random() * 16);
+          animTimer = setTimeout(typeChar, ci === 1 ? 900 : 28 + Math.random() * 16);
         } else {
-          setTimeout(function () {
+          animTimer = setTimeout(function () {
+            if (!animating) return;
             terminalEl.textContent = '';
             ci = 0;
             si = (si + 1) % snippets.length;
-            setTimeout(typeChar, 500);
+            animTimer = setTimeout(typeChar, 500);
           }, 2600);
         }
       }
       typeChar();
     }
+
+    function stopAnimation() {
+      animating = false;
+      if (animTimer) clearTimeout(animTimer);
+    }
+
+    // ── Interactive mode ─────────────────────────────────────────
+    const PROMPT = 'PS C:\\visitors\\you> ';
+    const terminal = terminalEl.closest('.terminal');
+    const termBody = terminalEl.closest('.terminal__body');
+    let interactive = false;
+    let lines = [];
+    let buffer = '';
+    let hiddenInput = null;
+
+    function print(text) {
+      lines = lines.concat(text.split('\n'));
+      if (lines.length > 60) lines = lines.slice(lines.length - 60);
+    }
+
+    function render() {
+      const head = lines.length ? lines.join('\n') + '\n' : '';
+      terminalEl.textContent = head + PROMPT + buffer;
+      if (termBody) termBody.scrollTop = termBody.scrollHeight;
+    }
+
+    function goTo(hash, label) {
+      print('Opening ' + label + '...');
+      setTimeout(function () {
+        const target = document.querySelector(hash);
+        if (target) target.scrollIntoView(prefersReducedMotion ? {} : { behavior: 'smooth' });
+      }, 400);
+    }
+
+    const commands = {
+      'help': function () {
+        print([
+          'Available commands:',
+          '  whoami      who runs this site',
+          '  projects    jump to automation projects',
+          '  skills      jump to skills and certs',
+          '  resume      download the resume (PDF)',
+          '  contact     jump to contact options',
+          '  blog        open the blog',
+          '  tools       open the email security checker',
+          '  clear       clear the screen',
+          '  exit        return to the demo loop'
+        ].join('\n'));
+      },
+      'whoami': function () {
+        print('Andrew Minga. IT leader, Azure Solutions Architect Expert,\nManager of Customer Experience Engineering at C Spire Business.\nBuilds MSP automation and AI tooling. Star Wars fan.');
+      },
+      'projects': function () { goTo('#projects', 'projects'); },
+      'skills': function () { goTo('#skills', 'skills'); },
+      'contact': function () { goTo('#contact', 'contact'); },
+      'resume': function () {
+        print('Downloading Andrew_Minga_Resume_2026.pdf ...');
+        const a = document.createElement('a');
+        a.href = 'assets/Andrew_Minga_Resume_2026.pdf';
+        a.download = 'Andrew_Minga_Resume_2026.pdf';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      },
+      'blog': function () {
+        print('Opening blog...');
+        setTimeout(function () { window.location.href = 'blog/index.html'; }, 400);
+      },
+      'tools': function () {
+        print('Opening email security checker...');
+        setTimeout(function () { window.location.href = 'tools/email-security-checker.html'; }, 400);
+      },
+      'clear': function () { lines = []; },
+      'exit': function () {
+        interactive = false;
+        if (hiddenInput) hiddenInput.blur();
+        startAnimation();
+      },
+      'ls': function () { print('about/  experience/  skills/  projects/  blog/  tools/  interests/  contact/'); },
+      'sudo': function () { print('visitor is not in the sudoers file. This incident will be reported.'); },
+      'starwars': function () { print('May the Force be with you. Always.'); },
+      'hello': function () { print('Hello there. (General Kenobi!)'); }
+    };
+    commands['cls'] = commands['clear'];
+    commands['dir'] = commands['ls'];
+    commands['get-help'] = commands['help'];
+
+    function runCommand(raw) {
+      const cmd = raw.trim().toLowerCase();
+      lines.push(PROMPT + raw);
+      if (cmd !== '') {
+        if (commands[cmd]) {
+          commands[cmd]();
+        } else {
+          print("The term '" + raw.trim() + "' is not recognized as the name of a cmdlet,\nfunction, script file, or operable program. Type 'help' for options.");
+        }
+      }
+      if (interactive) render();
+    }
+
+    function enterInteractive() {
+      if (interactive) return;
+      stopAnimation();
+      interactive = true;
+      lines = ["Interactive mode. Type 'help' to see commands, 'exit' to leave."];
+      buffer = '';
+
+      if (!hiddenInput) {
+        hiddenInput = document.createElement('input');
+        hiddenInput.type = 'text';
+        hiddenInput.setAttribute('aria-label', 'Terminal command input');
+        hiddenInput.autocapitalize = 'off';
+        hiddenInput.autocomplete = 'off';
+        hiddenInput.style.cssText = 'position:absolute;opacity:0;height:1px;width:1px;';
+        terminal.appendChild(hiddenInput);
+
+        hiddenInput.addEventListener('input', function () {
+          buffer = hiddenInput.value;
+          render();
+        });
+        hiddenInput.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter') {
+            const cmd = buffer;
+            buffer = '';
+            hiddenInput.value = '';
+            runCommand(cmd);
+          } else if (e.key === 'Escape') {
+            commands['exit']();
+          }
+        });
+      }
+      hiddenInput.value = '';
+      hiddenInput.focus({ preventScroll: true });
+      render();
+    }
+
+    if (terminal) {
+      terminal.style.cursor = 'text';
+      terminal.setAttribute('title', 'Click to interact');
+      terminal.addEventListener('click', function () {
+        enterInteractive();
+        if (hiddenInput) hiddenInput.focus({ preventScroll: true });
+      });
+    }
+
+    startAnimation();
   }
 
   // ── Stat counters (animate on scroll into view) ────────────────
