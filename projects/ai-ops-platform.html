@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Case Study: AI-Assisted Operations Platform | Andrew Minga</title>
+  <meta name="description" content="Building a custom MCP server that connects Claude to the vendor APIs an MSP runs on.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://mingasolutions.com/projects/ai-ops-platform.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Case Study: AI-Assisted Operations Platform">
+  <meta property="og:description" content="A custom MCP server connecting Claude to MSP vendor APIs.">
+  <meta property="og:image" content="https://mingasolutions.com/assets/og-preview.jpg">
+  <meta property="og:url" content="https://mingasolutions.com/projects/ai-ops-platform.html">
+  <link rel="preload" href="../assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="nav__logo" href="../index.html" aria-label="Andrew Minga home">AM</a>
+      <button
+        class="nav__hamburger"
+        aria-controls="mobile-nav"
+        aria-expanded="false"
+        aria-label="Open navigation menu"
+      >
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+      <ul class="nav__links" id="mobile-nav" role="list">
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
+        <li><a href="../index.html#projects" class="is-active">Projects</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+        <li><a href="../interests.html">Interests</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <article class="section case">
+      <div class="container case__inner">
+        <p class="case__breadcrumb"><a href="../index.html#projects">&larr; All projects</a></p>
+        <div class="project-card__tag">AI Operations</div>
+        <h1 class="case__title">AI-Assisted Operations Platform</h1>
+        <p class="case__meta">Claude Code &middot; Model Context Protocol &middot; Node.js &middot; 10+ vendor APIs</p>
+
+        <h2>The problem</h2>
+        <p>
+          MSP work is swivel-chair work. A single client question routinely touches the ticketing system,
+          the documentation platform, the RMM, the network controller, the firewall manager, and a
+          licensing portal. Each has its own portal, its own auth, its own query language. The
+          information exists; the hours go to collecting it.
+        </p>
+
+        <h2>The approach</h2>
+        <p>
+          The Model Context Protocol gives an AI agent a standard way to call tools. So instead of an
+          engineer visiting six portals, I built a custom MCP server that exposes the vendor APIs an MSP
+          actually runs on as tools Claude can call: ticketing, CRM, documentation, RMM, network
+          management, firewall management, licensing, and monitoring.
+        </p>
+        <p>
+          One conversational request like "what changed on this client's network this week, and are
+          there any related tickets" becomes parallel API calls, cross-referenced, with the answer
+          synthesized and every claim traceable to a source system.
+        </p>
+
+        <h2>Build notes</h2>
+        <ul>
+          <li>Single Node.js MCP server with a module per vendor, all following one reference pattern:
+              auth fallback chain, automatic retry on expired sessions, consistent result wrapping</li>
+          <li>Each vendor module declares its tools with JSON Schema so the agent knows exactly what
+              parameters are legal before it calls</li>
+          <li>Read operations are the default; anything that writes to a production system carries
+              explicit guardrails</li>
+          <li>An evidence rule sits on top of everything: every statement in a generated report must
+              trace to an API response, not model inference</li>
+        </ul>
+
+        <h2>Outcome</h2>
+        <p>
+          Cross-platform questions that took an afternoon of portal-hopping now resolve in one
+          conversation. Client health checks, network change reviews, license audits, and incident
+          timelines pull from live systems instead of stale exports. The platform also became the
+          foundation for downstream automation: once the tools exist, every new workflow starts closer
+          to done.
+        </p>
+
+        <h2>Lessons</h2>
+        <ul>
+          <li>The reference pattern matters more than any single integration. Module ten took an hour
+              because modules one through nine established the shape.</li>
+          <li>AI agents need guardrails at the tool layer, not just the prompt layer. A prompt can be
+              talked out of a rule; a tool that refuses to write to production cannot.</li>
+          <li>Evidence discipline is what separates useful AI output from confident fiction. Enforce it
+              structurally.</li>
+        </ul>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer__inner">
+      <p>&copy; <span id="footer-year">2026</span> Andrew Minga. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
