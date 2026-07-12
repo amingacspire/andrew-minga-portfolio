@@ -24,47 +24,81 @@
     return new TextDecoder('utf-8').decode(buf);
   }
 
-  // Minimal ZIP reader: walks the central directory, inflates entries
+  // Minimal ZIP reader: walks the central directory, inflates entries.
+  // Hardened against hostile archives: bounded offsets, entry/size caps,
+  // local-header signature validation, explicit ZIP64 rejection.
+  var ZIP_MAX_ENTRIES = 100;
+  var ZIP_MAX_ENTRY_BYTES = 30 * 1024 * 1024;   // per-entry, compressed or declared uncompressed
+  var ZIP_MAX_TOTAL_BYTES = 100 * 1024 * 1024;  // total declared uncompressed across entries
+  var ZIP64_SENTINEL = 0xFFFFFFFF;
+
   function unzip(buf) {
-    var view = new DataView(buf);
-    var bytes = new Uint8Array(buf);
-    // Find end-of-central-directory (signature 0x06054b50), search from end
-    var eocd = -1;
-    for (var i = buf.byteLength - 22; i >= 0 && i > buf.byteLength - 65558; i--) {
-      if (view.getUint32(i, true) === 0x06054b50) { eocd = i; break; }
-    }
-    if (eocd === -1) return Promise.reject(new Error('not a valid zip file'));
-    var count = view.getUint16(eocd + 10, true);
-    var cdOffset = view.getUint32(eocd + 16, true);
+    try {
+      var view = new DataView(buf);
+      var bytes = new Uint8Array(buf);
+      var size = buf.byteLength;
+      // Find end-of-central-directory (signature 0x06054b50), search from end
+      var eocd = -1;
+      for (var i = size - 22; i >= 0 && i > size - 65558; i--) {
+        if (view.getUint32(i, true) === 0x06054b50) { eocd = i; break; }
+      }
+      if (eocd === -1) return Promise.reject(new Error('not a valid zip file'));
+      var count = view.getUint16(eocd + 10, true);
+      var cdOffset = view.getUint32(eocd + 16, true);
+      if (count > ZIP_MAX_ENTRIES) return Promise.reject(new Error('zip has too many entries (max ' + ZIP_MAX_ENTRIES + ')'));
+      if (cdOffset === ZIP64_SENTINEL) return Promise.reject(new Error('ZIP64 archives are not supported'));
+      if (cdOffset >= size) return Promise.reject(new Error('corrupt zip (central directory out of bounds)'));
 
-    var entries = [];
-    var p = cdOffset;
-    for (var e = 0; e < count; e++) {
-      if (view.getUint32(p, true) !== 0x02014b50) break;
-      var method = view.getUint16(p + 10, true);
-      var compSize = view.getUint32(p + 20, true);
-      var nameLen = view.getUint16(p + 28, true);
-      var extraLen = view.getUint16(p + 30, true);
-      var commentLen = view.getUint16(p + 32, true);
-      var localOffset = view.getUint32(p + 42, true);
-      var name = bufToText(bytes.slice(p + 46, p + 46 + nameLen).buffer);
-      entries.push({ name: name, method: method, compSize: compSize, localOffset: localOffset });
-      p += 46 + nameLen + extraLen + commentLen;
-    }
+      var entries = [];
+      var totalDeclared = 0;
+      var p = cdOffset;
+      for (var e = 0; e < count; e++) {
+        if (p + 46 > size || view.getUint32(p, true) !== 0x02014b50) break;
+        var method = view.getUint16(p + 10, true);
+        var compSize = view.getUint32(p + 20, true);
+        var uncompSize = view.getUint32(p + 24, true);
+        var nameLen = view.getUint16(p + 28, true);
+        var extraLen = view.getUint16(p + 30, true);
+        var commentLen = view.getUint16(p + 32, true);
+        var localOffset = view.getUint32(p + 42, true);
+        if (compSize === ZIP64_SENTINEL || uncompSize === ZIP64_SENTINEL || localOffset === ZIP64_SENTINEL) {
+          return Promise.reject(new Error('ZIP64 archives are not supported'));
+        }
+        if (compSize > ZIP_MAX_ENTRY_BYTES || uncompSize > ZIP_MAX_ENTRY_BYTES) {
+          return Promise.reject(new Error('zip entry too large (max 30 MB)'));
+        }
+        totalDeclared += uncompSize;
+        if (totalDeclared > ZIP_MAX_TOTAL_BYTES) {
+          return Promise.reject(new Error('zip contents too large (max 100 MB total)'));
+        }
+        if (p + 46 + nameLen > size) break;
+        var name = bufToText(bytes.slice(p + 46, p + 46 + nameLen).buffer);
+        entries.push({ name: name, method: method, compSize: compSize, localOffset: localOffset });
+        p += 46 + nameLen + extraLen + commentLen;
+      }
 
-    return Promise.all(entries.filter(function (en) {
-      return /\.xml$/i.test(en.name);
-    }).map(function (en) {
-      // Local header: 30 bytes fixed + name + extra (lengths from local header)
-      var lp = en.localOffset;
-      var lNameLen = view.getUint16(lp + 26, true);
-      var lExtraLen = view.getUint16(lp + 28, true);
-      var dataStart = lp + 30 + lNameLen + lExtraLen;
-      var data = buf.slice(dataStart, dataStart + en.compSize);
-      if (en.method === 0) return Promise.resolve(bufToText(data));
-      if (en.method === 8) return decompress(data, 'deflate-raw').then(bufToText);
-      return Promise.reject(new Error('unsupported zip compression method ' + en.method));
-    }));
+      return Promise.all(entries.filter(function (en) {
+        return /\.xml$/i.test(en.name);
+      }).map(function (en) {
+        // Local header: signature + 30 bytes fixed + name + extra
+        var lp = en.localOffset;
+        if (lp + 30 > size || view.getUint32(lp, true) !== 0x04034b50) {
+          return Promise.reject(new Error('corrupt zip (bad local header for ' + en.name + ')'));
+        }
+        var lNameLen = view.getUint16(lp + 26, true);
+        var lExtraLen = view.getUint16(lp + 28, true);
+        var dataStart = lp + 30 + lNameLen + lExtraLen;
+        if (dataStart + en.compSize > size) {
+          return Promise.reject(new Error('corrupt zip (entry data out of bounds)'));
+        }
+        var data = buf.slice(dataStart, dataStart + en.compSize);
+        if (en.method === 0) return Promise.resolve(bufToText(data));
+        if (en.method === 8) return decompress(data, 'deflate-raw').then(bufToText);
+        return Promise.reject(new Error('unsupported zip compression method ' + en.method));
+      }));
+    } catch (err) {
+      return Promise.reject(new Error('not a valid zip file'));
+    }
   }
 
   function fileToXmlTexts(file) {

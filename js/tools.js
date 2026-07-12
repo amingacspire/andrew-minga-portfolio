@@ -29,15 +29,28 @@
 
   function reverseName6(ip) {
     // Expand :: compression to 8 hextets, then nibble-reverse into ip6.arpa
-    var halves = ip.toLowerCase().split('::');
+    var s = ip.toLowerCase();
+    var halves = s.split('::');
+    if (halves.length > 2) return null; // more than one :: is invalid
+    // Embedded IPv4 tail (e.g. ::ffff:192.0.2.1) -> two hextets
+    var m4 = s.match(/(^|:)((\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3}))$/);
+    if (m4) {
+      var o = m4.slice(3, 7).map(Number);
+      if (o.some(function (x) { return x > 255; })) return null;
+      var v4hex = ((o[0] << 8) | o[1]).toString(16) + ':' + ((o[2] << 8) | o[3]).toString(16);
+      s = s.slice(0, s.length - m4[2].length) + v4hex;
+      halves = s.split('::');
+    }
     var left = halves[0] ? halves[0].split(':') : [];
     var right = halves.length > 1 && halves[1] ? halves[1].split(':') : [];
     var missing = 8 - left.length - right.length;
     if (halves.length > 1) {
+      if (missing < 1) return null; // :: must compress at least one group
       for (var i = 0; i < missing; i++) left.push('0');
     }
     var hextets = left.concat(right);
     if (hextets.length !== 8) return null;
+    if (!hextets.every(function (h) { return /^[0-9a-f]{1,4}$/.test(h); })) return null;
     var nibbles = hextets.map(function (h) {
       return ('0000' + h).slice(-4);
     }).join('').split('').reverse().join('.');
@@ -363,7 +376,7 @@
         ['Broadcast', prefix >= 31 ? 'n/a (point-to-point)' : fmt(broadcast)],
         ['First usable host', prefix >= 31 ? fmt(network) : fmt(network + 1)],
         ['Last usable host', prefix >= 31 ? fmt(broadcast) : fmt(broadcast - 1)],
-        ['Usable hosts', hosts.toLocaleString()]
+        ['Usable addresses', hosts.toLocaleString() + (prefix === 31 ? ' (point-to-point, RFC 3021)' : prefix === 32 ? ' (single host route)' : '')]
       ];
       rows.innerHTML = pairs.map(function (p) {
         return '<tr><th>' + p[0] + '</th><td class="tool-table__data">' + p[1] + '</td></tr>';
