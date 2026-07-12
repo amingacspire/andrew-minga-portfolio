@@ -2,4 +2,7 @@
 # HTTPS enforcement: handled by Cloudflare SSL/TLS settings (set to "Full (strict)")
 
 # www to apex canonical
-https://www.mingasolutions.com/* https://mingasolutions.com/:splat 301!
+https://www.andrewminga.com/* https://andrewminga.com/:splat 301!
+
+# Clean URL for the uses page (uses.tech requires the URL to end in "uses")
+/uses /uses.html 200
