@@ -76,18 +76,33 @@
       var rows = document.getElementById('whois-rows');
       var raw = document.getElementById('whois-raw');
 
-      var url = isIpv4(q) || q.indexOf(':') !== -1
-        ? 'https://rdap.org/ip/' + encodeURIComponent(q)
-        : 'https://rdap.org/domain/' + encodeURIComponent(q);
+      // IPs and domains are URL-safe as-is; encoding IPv6 colons breaks RDAP servers
+      q = q.replace(/[^a-z0-9.:\-\/]/g, '');
+      var isIp = isIpv4(q.split('/')[0]) || q.indexOf(':') !== -1;
+      var endpoints = isIp
+        ? ['https://rdap.org/ip/' + q, 'https://rdap.arin.net/registry/ip/' + q.split('/')[0]]
+        : ['https://rdap.org/domain/' + q];
 
       status.textContent = 'Querying registry…';
       results.hidden = true;
 
-      fetch(url, { headers: { Accept: 'application/rdap+json' } }).then(function (r) {
-        if (r.status === 404) throw new Error('not registered or not found in RDAP');
-        if (!r.ok) throw new Error('registry returned ' + r.status);
-        return r.json();
-      }).then(function (d) {
+      function tryEndpoint(i) {
+        if (i >= endpoints.length) return Promise.reject(new Error('no registry answered'));
+        return fetch(endpoints[i], { headers: { Accept: 'application/rdap+json' } }).then(function (r) {
+          if (r.status === 404) throw new Error('not registered or not found in RDAP');
+          if (!r.ok) {
+            if (i + 1 < endpoints.length) return tryEndpoint(i + 1);
+            throw new Error('registry returned ' + r.status);
+          }
+          return r.json();
+        }).catch(function (err) {
+          if (String(err.message).indexOf('not registered') !== -1) throw err;
+          if (i + 1 < endpoints.length) return tryEndpoint(i + 1);
+          throw err;
+        });
+      }
+
+      tryEndpoint(0).then(function (d) {
         var out = [];
         function row(k, v) { if (v) out.push('<tr><th>' + esc(k) + '</th><td>' + v + '</td></tr>'); }
 

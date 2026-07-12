@@ -240,7 +240,22 @@
       checkTlsRpt(domain),
       checkBimi(domain)
     ]).then(function (cards) {
-      cardsEl.innerHTML = cards.join('');
+      var all = cards.join('');
+      function count(s) { return (all.match(new RegExp('check-card--' + s, 'g')) || []).length; }
+      var summary =
+        '<div class="checker__summary">' +
+        ['pass', 'warn', 'fail', 'info'].map(function (s) {
+          var n = count(s);
+          return n ? '<span class="checker__summary-chip checker__summary-chip--' + s + '">' +
+            n + ' ' + s.toUpperCase() + '</span>' : '';
+        }).join('') +
+        '</div>';
+
+      cardsEl.innerHTML = summary +
+        '<h3 class="checker__group">Core email authentication</h3>' +
+        cards.slice(0, 4).join('') +
+        '<h3 class="checker__group">Advanced standards <span class="checker__optional">(optional, mature setups)</span></h3>' +
+        cards.slice(4).join('');
       domainLabel.textContent = domain;
       statusEl.textContent = '';
       resultsEl.hidden = false;
