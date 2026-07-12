@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Internet Speed Test | Andrew Minga</title>
+  <meta name="description" content="Free browser speed test: download, upload, latency, jitter, and packet loss measured against Cloudflare's edge network. No app, no signup.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://mingasolutions.com/tools/speed-test.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Internet Speed Test">
+  <meta property="og:description" content="Download, upload, latency, jitter, and packet loss measured against Cloudflare's edge network.">
+  <meta property="og:image" content="https://mingasolutions.com/assets/og-preview.jpg">
+  <meta property="og:url" content="https://mingasolutions.com/tools/speed-test.html">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Internet Speed Test",
+    "url": "https://mingasolutions.com/tools/speed-test.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "author": { "@type": "Person", "name": "Andrew Minga", "url": "https://mingasolutions.com" }
+  }
+  </script>
+  <link rel="preload" href="../assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="nav__logo" href="../index.html" aria-label="Andrew Minga home">AM</a>
+      <button
+        class="nav__hamburger"
+        aria-controls="mobile-nav"
+        aria-expanded="false"
+        aria-label="Open navigation menu"
+      >
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+      <ul class="nav__links" id="mobile-nav" role="list">
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="index.html" class="is-active" aria-current="page">Tools</a></li>
+        <li><a href="../blog/index.html">Blog</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+        <li><a href="../interests.html">Interests</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="section case">
+      <div class="container case__inner">
+        <p class="case__breadcrumb"><a href="index.html">&larr; All tools</a></p>
+        <p class="hero__eyebrow">Free tool &middot; runs in your browser</p>
+        <h1 class="case__title">Internet Speed Test</h1>
+        <p style="color: var(--color-text-muted); line-height: 1.7; margin-bottom: 2rem;">
+          Measures download, upload, latency, jitter, and packet loss against Cloudflare's edge
+          network using their open-source measurement engine. Takes about 30 seconds.
+        </p>
+
+        <button type="button" class="btn btn--primary" id="speed-start">Start Test</button>
+        <div id="speed-status" class="checker__status" role="status" aria-live="polite"></div>
+
+        <div id="speed-results" hidden>
+          <div class="speed__grid">
+            <div class="speed-stat speed-stat--big">
+              <span class="speed-stat__label">Download</span>
+              <span class="speed-stat__value" id="speed-down">—</span>
+              <span class="speed-stat__unit">Mbps</span>
+            </div>
+            <div class="speed-stat speed-stat--big">
+              <span class="speed-stat__label">Upload</span>
+              <span class="speed-stat__value" id="speed-up">—</span>
+              <span class="speed-stat__unit">Mbps</span>
+            </div>
+            <div class="speed-stat">
+              <span class="speed-stat__label">Latency (idle)</span>
+              <span class="speed-stat__value" id="speed-latency">—</span>
+              <span class="speed-stat__unit">ms</span>
+            </div>
+            <div class="speed-stat">
+              <span class="speed-stat__label">Jitter</span>
+              <span class="speed-stat__value" id="speed-jitter">—</span>
+              <span class="speed-stat__unit">ms</span>
+            </div>
+            <div class="speed-stat">
+              <span class="speed-stat__label">Latency under load</span>
+              <span class="speed-stat__value" id="speed-loaded">—</span>
+              <span class="speed-stat__unit">ms</span>
+            </div>
+            <div class="speed-stat">
+              <span class="speed-stat__label">Packet loss</span>
+              <span class="speed-stat__value" id="speed-loss">—</span>
+              <span class="speed-stat__unit">%</span>
+            </div>
+          </div>
+          <p class="checker__hint" id="speed-verdict"></p>
+        </div>
+
+        <div class="checker__disclaimer" style="margin-top: 2rem;">
+          <p>
+            <strong>Read the fine print:</strong> results measure the path between your device and the
+            nearest Cloudflare data center, so they reflect your connection quality, not a specific ISP
+            plan number. Wi-Fi, VPNs, and busy networks all lower results; test wired if you are
+            chasing a real number. The measurement engine is
+            <a href="https://github.com/cloudflare/speedtest" target="_blank" rel="noopener noreferrer">Cloudflare's open-source library</a>;
+            completed measurements are collected by Cloudflare for aggregate internet-quality statistics.
+            This site itself logs nothing.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer__inner">
+      <p>&copy; <span id="footer-year">2026</span> Andrew Minga. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script type="module">
+    import SpeedTest from '../assets/vendor/cloudflare-speedtest.esm.js';
+
+    const btn = document.getElementById('speed-start');
+    const status = document.getElementById('speed-status');
+    const results = document.getElementById('speed-results');
+    const verdict = document.getElementById('speed-verdict');
+
+    const fmtMbps = bps => bps == null ? '—' : (bps / 1e6).toFixed(bps >= 1e8 ? 0 : 1);
+    const fmtMs = ms => ms == null ? '—' : ms.toFixed(ms < 10 ? 1 : 0);
+    const fmtLoss = r => r == null ? '—' : (r * 100).toFixed(1);
+
+    function render(summary) {
+      document.getElementById('speed-down').textContent = fmtMbps(summary.download);
+      document.getElementById('speed-up').textContent = fmtMbps(summary.upload);
+      document.getElementById('speed-latency').textContent = fmtMs(summary.latency);
+      document.getElementById('speed-jitter').textContent = fmtMs(summary.jitter);
+      document.getElementById('speed-loaded').textContent = fmtMs(summary.downLoadedLatency);
+      document.getElementById('speed-loss').textContent = fmtLoss(summary.packetLoss);
+      results.hidden = false;
+    }
+
+    function verdictText(s) {
+      if (s.download == null) return '';
+      const down = s.download / 1e6;
+      const bufferbloat = s.downLoadedLatency != null && s.latency != null && (s.downLoadedLatency - s.latency) > 100;
+      let v = down >= 100 ? 'Plenty of bandwidth for anything short of a small office.'
+        : down >= 25 ? 'Comfortable for HD streaming, video calls, and remote work.'
+        : 'On the low side for modern remote work; video calls may struggle.';
+      if (bufferbloat) v += ' Note: latency climbs sharply under load (bufferbloat), which hurts calls and gaming even with good bandwidth.';
+      if (s.packetLoss != null && s.packetLoss > 0.01) v += ' Packet loss above 1% detected, which degrades real-time traffic.';
+      return v;
+    }
+
+    let running = false;
+    btn.addEventListener('click', () => {
+      if (running) return;
+      running = true;
+      btn.disabled = true;
+      btn.textContent = 'Testing…';
+      status.textContent = 'Measuring against the nearest Cloudflare data center…';
+      verdict.textContent = '';
+
+      const st = new SpeedTest({ autoStart: false });
+      st.onResultsChange = () => {
+        try { render(st.results.getSummary()); } catch (e) { /* partial results */ }
+      };
+      st.onFinish = r => {
+        render(r.getSummary());
+        verdict.textContent = verdictText(r.getSummary());
+        status.textContent = '';
+        btn.disabled = false;
+        btn.textContent = 'Run Again';
+        running = false;
+      };
+      st.onError = e => {
+        status.textContent = 'Test failed: ' + e + '. Ad blockers and strict privacy extensions sometimes block the measurement endpoints.';
+        btn.disabled = false;
+        btn.textContent = 'Start Test';
+        running = false;
+      };
+      st.play();
+    });
+  </script>
+</body>
+</html>

@@ -1432,6 +1432,49 @@ ul { list-style: none; }
 .check-card--info { border-left-color: #3498db; }
 .check-card--info .check-card__chip { background: #3498db; }
 
+/* Speed test */
+.speed__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-sm);
+  margin: var(--space-md) 0;
+}
+
+.speed-stat {
+  background: var(--color-placeholder);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.speed-stat--big .speed-stat__value {
+  font-size: 2.4rem;
+  color: var(--color-accent);
+}
+
+.speed-stat__label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.speed-stat__value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.speed-stat__unit {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
 /* =========================================================
    Blog list
    ========================================================= */
