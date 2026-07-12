@@ -72,6 +72,14 @@
         <button type="button" class="btn btn--primary" id="speed-start">Start Test</button>
         <div id="speed-status" class="checker__status" role="status" aria-live="polite"></div>
 
+        <div id="speed-progress" class="speed-progress" hidden>
+          <div class="speed-progress__pulse" aria-hidden="true"><span></span><span></span><span></span></div>
+          <p class="speed-progress__phase" id="speed-phase">Starting&hellip;</p>
+          <div class="speed-progress__track" role="progressbar" aria-label="Test progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="speed-track">
+            <div class="speed-progress__bar" id="speed-bar"></div>
+          </div>
+        </div>
+
         <div id="speed-results" hidden>
           <div class="speed__grid">
             <div class="speed-stat speed-stat--big">
@@ -137,6 +145,43 @@
     const status = document.getElementById('speed-status');
     const results = document.getElementById('speed-results');
     const verdict = document.getElementById('speed-verdict');
+    const progress = document.getElementById('speed-progress');
+    const phaseEl = document.getElementById('speed-phase');
+    const barEl = document.getElementById('speed-bar');
+    const trackEl = document.getElementById('speed-track');
+
+    // Default measurement sequence from @cloudflare/speedtest 1.11.0, passed
+    // explicitly so the progress total is known and stable
+    const MEASUREMENTS = [
+      { type: 'latency', numPackets: 1 },
+      { type: 'download', bytes: 1e5, count: 1, bypassMinDuration: true },
+      { type: 'latency', numPackets: 20 },
+      { type: 'download', bytes: 1e5, count: 9 },
+      { type: 'download', bytes: 1e6, count: 8 },
+      { type: 'upload', bytes: 1e5, count: 8 },
+      { type: 'packetLoss', numPackets: 1e3, batchSize: 10, batchWaitTime: 10, responsesWaitTime: 3000 },
+      { type: 'upload', bytes: 1e6, count: 6 },
+      { type: 'download', bytes: 1e7, count: 6 },
+      { type: 'upload', bytes: 1e7, count: 4 },
+      { type: 'download', bytes: 25e6, count: 4 },
+      { type: 'upload', bytes: 25e6, count: 4 },
+      { type: 'download', bytes: 1e8, count: 3 },
+      { type: 'upload', bytes: 5e7, count: 3 },
+      { type: 'download', bytes: 25e7, count: 2 }
+    ];
+    const PHASE_LABELS = {
+      latency: 'Measuring latency…',
+      download: 'Testing download speed…',
+      upload: 'Testing upload speed…',
+      packetLoss: 'Checking packet loss…'
+    };
+
+    function setProgress(step, label) {
+      const pct = Math.min(100, Math.round((step / MEASUREMENTS.length) * 100));
+      barEl.style.width = pct + '%';
+      trackEl.setAttribute('aria-valuenow', pct);
+      if (label) phaseEl.textContent = label;
+    }
 
     const fmtMbps = bps => bps == null ? '—' : (bps / 1e6).toFixed(bps >= 1e8 ? 0 : 1);
     const fmtMs = ms => ms == null ? '—' : ms.toFixed(ms < 10 ? 1 : 0);
@@ -170,22 +215,31 @@
       running = true;
       btn.disabled = true;
       btn.textContent = 'Testing…';
-      status.textContent = 'Measuring against the nearest Cloudflare data center…';
+      status.textContent = '';
       verdict.textContent = '';
+      progress.hidden = false;
+      setProgress(0, 'Connecting to the nearest Cloudflare data center…');
 
-      const st = new SpeedTest({ autoStart: false });
+      let step = 0;
+      const st = new SpeedTest({ autoStart: false, measurements: MEASUREMENTS });
+      st.onNewMeasurementStarted = m => {
+        step++;
+        setProgress(step, PHASE_LABELS[m && m.type] || 'Measuring…');
+      };
       st.onResultsChange = () => {
         try { render(st.results.getSummary()); } catch (e) { /* partial results */ }
       };
       st.onFinish = r => {
+        setProgress(MEASUREMENTS.length, 'Done.');
         render(r.getSummary());
         verdict.textContent = verdictText(r.getSummary());
-        status.textContent = '';
+        progress.hidden = true;
         btn.disabled = false;
         btn.textContent = 'Run Again';
         running = false;
       };
       st.onError = e => {
+        progress.hidden = true;
         status.textContent = 'Test failed: ' + e + '. Ad blockers and strict privacy extensions sometimes block the measurement endpoints.';
         btn.disabled = false;
         btn.textContent = 'Start Test';
