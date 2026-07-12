@@ -206,7 +206,7 @@
         ].join('\n'));
       },
       'whoami': function () {
-        print('Andrew Minga. IT leader, Azure Solutions Architect Expert,\nManager of Customer Experience Engineering at C Spire Business.\nBuilds MSP automation and AI tooling. Star Wars fan.');
+        print('Andrew Minga. IT leader, Azure Solutions Architect Expert,\nManager of Customer Experience Engineering at C Spire Business.\nBuilds MSP automation and AI tooling. Star Wars fan.');
       },
       'projects': function () { goTo('#projects', 'projects'); },
       'skills': function () { goTo('#skills', 'skills'); },
