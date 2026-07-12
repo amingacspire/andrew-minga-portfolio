@@ -8,6 +8,15 @@
     <atom:link href="https://andrewminga.com/feed.xml" rel="self" type="application/rss+xml"/>
     <!-- FEED-SYNC-INSERT -->
     <item>
+      <title>Why fixing your data architecture matters more than upgrading your detection models</title>
+      <link>https://andrewminga.com/blog/posts/2026-07-12-why-fixing-your-data-architecture-matters-more-than-upgradin.html</link>
+      <guid>https://andrewminga.com/blog/posts/2026-07-12-why-fixing-your-data-architecture-matters-more-than-upgradin.html</guid>
+      <pubDate>Sun, 12 Jul 2026 12:00:00 GMT</pubDate>
+      <description>Better detection models won&#x27;t save you if the data feeding them is a mess.
+
+A recent CSO Online piece makes the case directly: most security teams are investing in smarter AI and ML tooling while...</description>
+    </item>
+    <item>
       <title>Building This Site with Claude Code</title>
       <link>https://andrewminga.com/blog/posts/building-this-site-with-claude-code.html</link>
       <guid>https://andrewminga.com/blog/posts/building-this-site-with-claude-code.html</guid>
