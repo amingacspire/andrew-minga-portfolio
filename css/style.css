@@ -1516,6 +1516,26 @@ ul { list-style: none; }
   color: var(--color-text-muted);
 }
 
+/* Config diff view */
+.diff-view {
+  font-family: 'Consolas', 'Monaco', monospace;
+  font-size: 0.8rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  overflow-x: auto;
+  margin-top: var(--space-sm);
+  background: var(--color-bg);
+}
+
+.diff-view > div {
+  padding: 0.1rem 0.6rem;
+  white-space: pre;
+}
+
+.diff-add { background: rgba(46, 204, 113, 0.14); color: #b8f0d0; }
+.diff-del { background: rgba(231, 76, 60, 0.14); color: #f5c0ba; }
+.diff-ctx { color: var(--color-text-muted); }
+
 .speed-progress {
   margin: var(--space-md) 0;
   display: flex;

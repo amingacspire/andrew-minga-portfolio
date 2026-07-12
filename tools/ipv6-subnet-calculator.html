@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IPv6 Subnet Calculator | Andrew Minga</title>
+  <meta name="description" content="IPv6 network, first/last address, block size, compression, expansion, and reverse ip6.arpa from any address and prefix. Free, client-side.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://andrewminga.com/tools/ipv6-subnet-calculator.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="IPv6 Subnet Calculator">
+  <meta property="og:description" content="IPv6 network, first/last address, block size, compression, expansion, and reverse ip6.arpa from any address and prefix. Free, client-side.">
+  <meta property="og:image" content="https://andrewminga.com/assets/og-preview.jpg">
+  <meta property="og:url" content="https://andrewminga.com/tools/ipv6-subnet-calculator.html">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "IPv6 Subnet Calculator",
+    "url": "https://andrewminga.com/tools/ipv6-subnet-calculator.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "author": { "@type": "Person", "name": "Andrew Minga", "url": "https://andrewminga.com" }
+  }
+  </script>
+  <link rel="preload" href="../assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="nav__logo" href="../index.html" aria-label="Andrew Minga home">AM</a>
+      <button class="nav__hamburger" aria-controls="mobile-nav" aria-expanded="false" aria-label="Open navigation menu">
+        <span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span>
+      </button>
+      <ul class="nav__links" id="mobile-nav" role="list">
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="index.html" class="is-active" aria-current="page">Tools</a></li>
+        <li><a href="../blog/index.html">Blog</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+        <li><a href="../interests.html">Interests</a></li>
+        <li><a href="../uses.html">Uses</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="section case">
+      <div class="container case__inner">
+        <p class="case__breadcrumb"><a href="index.html">&larr; All tools</a></p>
+        <p class="hero__eyebrow">Free tool &middot; runs in your browser</p>
+        <h1 class="case__title">IPv6 Subnet Calculator</h1>
+        <p style="color: var(--color-text-muted); line-height: 1.7; margin-bottom: 2rem;">Address expansion and compression, network and first/last address, block size, and the reverse <code>ip6.arpa</code> name, computed with full 128-bit precision.</p>
+        <form id="v6-form" class="checker__form" autocomplete="off">
+          <div class="checker__row"><label for="v6-input" class="checker__label">IPv6 address / prefix</label>
+          <input type="text" id="v6-input" class="checker__input" placeholder="2001:db8::/48" required spellcheck="false"></div>
+          <button type="submit" class="btn btn--primary">Calculate</button>
+        </form>
+        <div id="v6-status" class="checker__status" role="status" aria-live="polite"></div>
+        <div id="v6-results" hidden><table class="tool-table"><tbody id="v6-rows"></tbody></table></div>
+        <div class="fine-print"><p>All math runs locally with JavaScript BigInt for exact 128-bit results. Nothing is sent anywhere.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer__inner">
+      <p>&copy; <span id="footer-year">2026</span> Andrew Minga. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/tools2.js"></script>
+</body>
+</html>

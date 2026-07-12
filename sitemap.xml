@@ -116,4 +116,44 @@
     <lastmod>2026-07-12</lastmod>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://andrewminga.com/tools/spf-policy-tree.html</loc>
+    <lastmod>2026-07-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://andrewminga.com/tools/dns-propagation.html</loc>
+    <lastmod>2026-07-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://andrewminga.com/tools/ipv6-subnet-calculator.html</loc>
+    <lastmod>2026-07-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://andrewminga.com/tools/jwt-inspector.html</loc>
+    <lastmod>2026-07-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://andrewminga.com/tools/pwned-password.html</loc>
+    <lastmod>2026-07-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://andrewminga.com/tools/m365-readiness.html</loc>
+    <lastmod>2026-07-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://andrewminga.com/tools/config-diff.html</loc>
+    <lastmod>2026-07-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://andrewminga.com/tools/hash-checksum.html</loc>
+    <lastmod>2026-07-12</lastmod>
+    <priority>0.8</priority>
+  </url>
 </urlset>

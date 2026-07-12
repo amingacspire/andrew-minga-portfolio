@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Config Diff & Redactor | Andrew Minga</title>
+  <meta name="description" content="Compare two config exports (JSON, CSV, text) line by line with optional redaction of GUIDs, IPs, and emails. Fully local, nothing uploaded.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://andrewminga.com/tools/config-diff.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Config Diff & Redactor">
+  <meta property="og:description" content="Compare two config exports (JSON, CSV, text) line by line with optional redaction of GUIDs, IPs, and emails. Fully local, nothing uploaded.">
+  <meta property="og:image" content="https://andrewminga.com/assets/og-preview.jpg">
+  <meta property="og:url" content="https://andrewminga.com/tools/config-diff.html">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Config Diff & Redactor",
+    "url": "https://andrewminga.com/tools/config-diff.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "author": { "@type": "Person", "name": "Andrew Minga", "url": "https://andrewminga.com" }
+  }
+  </script>
+  <link rel="preload" href="../assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="nav__logo" href="../index.html" aria-label="Andrew Minga home">AM</a>
+      <button class="nav__hamburger" aria-controls="mobile-nav" aria-expanded="false" aria-label="Open navigation menu">
+        <span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span>
+      </button>
+      <ul class="nav__links" id="mobile-nav" role="list">
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="index.html" class="is-active" aria-current="page">Tools</a></li>
+        <li><a href="../blog/index.html">Blog</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+        <li><a href="../interests.html">Interests</a></li>
+        <li><a href="../uses.html">Uses</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="section case">
+      <div class="container case__inner">
+        <p class="case__breadcrumb"><a href="index.html">&larr; All tools</a></p>
+        <p class="hero__eyebrow">Free tool &middot; nothing leaves your browser</p>
+        <h1 class="case__title">Config Diff &amp; Redactor</h1>
+        <p style="color: var(--color-text-muted); line-height: 1.7; margin-bottom: 2rem;">Paste two versions of a config export &mdash; Intune, Entra, a firewall rule set, a DNS zone &mdash; and see exactly what changed, line by line. The optional redactor strips GUIDs, IPv4 addresses, and email addresses first, so you can share a diff safely.</p>
+        <form id="diff-form" class="checker__form" autocomplete="off" style="max-width:none;">
+          <div class="checker__row"><label for="diff-a" class="checker__label">Before</label>
+          <textarea id="diff-a" class="checker__input tool-textarea" rows="8" spellcheck="false"></textarea></div>
+          <div class="checker__row"><label for="diff-b" class="checker__label">After</label>
+          <textarea id="diff-b" class="checker__input tool-textarea" rows="8" spellcheck="false"></textarea></div>
+          <label class="tool-check"><input type="checkbox" id="diff-redact" checked> Redact GUIDs, IPv4 addresses, and emails before diffing</label>
+          <button type="submit" class="btn btn--primary">Compare</button>
+        </form>
+        <div id="diff-results" hidden></div>
+        <div class="fine-print"><p>Everything runs in your browser; neither config is uploaded. Redaction is pattern-based and best-effort &mdash; review the output before sharing, as it will not catch every sensitive value (usernames, hostnames, custom secrets).</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer__inner">
+      <p>&copy; <span id="footer-year">2026</span> Andrew Minga. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/tools2.js"></script>
+</body>
+</html>

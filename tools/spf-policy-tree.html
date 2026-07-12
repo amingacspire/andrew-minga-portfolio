@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SPF Policy Tree & Lookup Counter | Andrew Minga</title>
+  <meta name="description" content="Expand an SPF record recursively, count DNS lookups against the 10-lookup limit, and flag void lookups. Free, client-side.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://andrewminga.com/tools/spf-policy-tree.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="SPF Policy Tree & Lookup Counter">
+  <meta property="og:description" content="Expand an SPF record recursively, count DNS lookups against the 10-lookup limit, and flag void lookups. Free, client-side.">
+  <meta property="og:image" content="https://andrewminga.com/assets/og-preview.jpg">
+  <meta property="og:url" content="https://andrewminga.com/tools/spf-policy-tree.html">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "SPF Policy Tree & Lookup Counter",
+    "url": "https://andrewminga.com/tools/spf-policy-tree.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "author": { "@type": "Person", "name": "Andrew Minga", "url": "https://andrewminga.com" }
+  }
+  </script>
+  <link rel="preload" href="../assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="nav__logo" href="../index.html" aria-label="Andrew Minga home">AM</a>
+      <button class="nav__hamburger" aria-controls="mobile-nav" aria-expanded="false" aria-label="Open navigation menu">
+        <span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span>
+      </button>
+      <ul class="nav__links" id="mobile-nav" role="list">
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="index.html" class="is-active" aria-current="page">Tools</a></li>
+        <li><a href="../blog/index.html">Blog</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+        <li><a href="../interests.html">Interests</a></li>
+        <li><a href="../uses.html">Uses</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="section case">
+      <div class="container case__inner">
+        <p class="case__breadcrumb"><a href="index.html">&larr; All tools</a></p>
+        <p class="hero__eyebrow">Free tool &middot; runs in your browser</p>
+        <h1 class="case__title">SPF Policy Tree</h1>
+        <p style="color: var(--color-text-muted); line-height: 1.7; margin-bottom: 2rem;">Recursively expands every <code>include</code> and <code>redirect</code> in a domain's SPF record, counts DNS lookups against the RFC 7208 limit of 10, and flags void lookups. The single most common cause of silent SPF failure is blowing past 10 lookups.</p>
+        <form id="spftree-form" class="checker__form" autocomplete="off">
+          <div class="checker__row"><label for="spftree-domain" class="checker__label">Domain</label>
+          <input type="text" id="spftree-domain" class="checker__input" placeholder="example.com" required spellcheck="false"></div>
+          <button type="submit" class="btn btn--primary">Expand</button>
+        </form>
+        <div id="spftree-status" class="checker__status" role="status" aria-live="polite"></div>
+        <div id="spftree-results" hidden></div>
+        <div class="fine-print"><p>All lookups run read-only through Cloudflare's public resolver. Lookup counting follows RFC 7208: include, a, mx, ptr, exists, and redirect each cost one query; the ip4/ip6/all mechanisms are free.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer__inner">
+      <p>&copy; <span id="footer-year">2026</span> Andrew Minga. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/tools2.js"></script>
+</body>
+</html>

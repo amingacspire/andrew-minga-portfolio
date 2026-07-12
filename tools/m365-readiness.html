@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Microsoft 365 Onboarding Readiness Checker | Andrew Minga</title>
+  <meta name="description" content="Check a domain's DNS for Microsoft 365 readiness: MX, Autodiscover, SPF, DKIM, DMARC, and Teams records in one view. Free, client-side.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://andrewminga.com/tools/m365-readiness.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Microsoft 365 Onboarding Readiness Checker">
+  <meta property="og:description" content="Check a domain's DNS for Microsoft 365 readiness: MX, Autodiscover, SPF, DKIM, DMARC, and Teams records in one view. Free, client-side.">
+  <meta property="og:image" content="https://andrewminga.com/assets/og-preview.jpg">
+  <meta property="og:url" content="https://andrewminga.com/tools/m365-readiness.html">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Microsoft 365 Onboarding Readiness Checker",
+    "url": "https://andrewminga.com/tools/m365-readiness.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "author": { "@type": "Person", "name": "Andrew Minga", "url": "https://andrewminga.com" }
+  }
+  </script>
+  <link rel="preload" href="../assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="nav__logo" href="../index.html" aria-label="Andrew Minga home">AM</a>
+      <button class="nav__hamburger" aria-controls="mobile-nav" aria-expanded="false" aria-label="Open navigation menu">
+        <span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span>
+      </button>
+      <ul class="nav__links" id="mobile-nav" role="list">
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="index.html" class="is-active" aria-current="page">Tools</a></li>
+        <li><a href="../blog/index.html">Blog</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+        <li><a href="../interests.html">Interests</a></li>
+        <li><a href="../uses.html">Uses</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="section case">
+      <div class="container case__inner">
+        <p class="case__breadcrumb"><a href="index.html">&larr; All tools</a></p>
+        <p class="hero__eyebrow">Free tool &middot; runs in your browser</p>
+        <h1 class="case__title">M365 Onboarding Readiness</h1>
+        <p style="color: var(--color-text-muted); line-height: 1.7; margin-bottom: 2rem;">One check for whether a domain's DNS is ready to host email and Teams on Microsoft 365: MX to Exchange Online, Autodiscover, the Exchange SPF include, DKIM selectors, DMARC, and legacy Teams SRV records.</p>
+        <form id="m365-form" class="checker__form" autocomplete="off">
+          <div class="checker__row"><label for="m365-domain" class="checker__label">Domain</label>
+          <input type="text" id="m365-domain" class="checker__input" placeholder="example.com" required spellcheck="false"></div>
+          <button type="submit" class="btn btn--primary">Check Readiness</button>
+        </form>
+        <div id="m365-status" class="checker__status" role="status" aria-live="polite"></div>
+        <div id="m365-results" hidden></div>
+        <div class="fine-print"><p>Read-only DNS checks via Cloudflare's resolver. This inspects public DNS only; it cannot see tenant-side configuration, license state, or mailbox provisioning. A green board means DNS is ready, not that onboarding is complete.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer__inner">
+      <p>&copy; <span id="footer-year">2026</span> Andrew Minga. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/tools2.js"></script>
+</body>
+</html>

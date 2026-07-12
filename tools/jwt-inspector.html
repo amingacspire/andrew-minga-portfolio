@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JWT Inspector (Entra / OAuth) | Andrew Minga</title>
+  <meta name="description" content="Decode a JWT locally: header, claims, expiry, tenant ID, scopes, and roles. The token never leaves your browser. Free.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://andrewminga.com/tools/jwt-inspector.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="JWT Inspector (Entra / OAuth)">
+  <meta property="og:description" content="Decode a JWT locally: header, claims, expiry, tenant ID, scopes, and roles. The token never leaves your browser. Free.">
+  <meta property="og:image" content="https://andrewminga.com/assets/og-preview.jpg">
+  <meta property="og:url" content="https://andrewminga.com/tools/jwt-inspector.html">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "JWT Inspector (Entra / OAuth)",
+    "url": "https://andrewminga.com/tools/jwt-inspector.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "author": { "@type": "Person", "name": "Andrew Minga", "url": "https://andrewminga.com" }
+  }
+  </script>
+  <link rel="preload" href="../assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="nav__logo" href="../index.html" aria-label="Andrew Minga home">AM</a>
+      <button class="nav__hamburger" aria-controls="mobile-nav" aria-expanded="false" aria-label="Open navigation menu">
+        <span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span>
+      </button>
+      <ul class="nav__links" id="mobile-nav" role="list">
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="index.html" class="is-active" aria-current="page">Tools</a></li>
+        <li><a href="../blog/index.html">Blog</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+        <li><a href="../interests.html">Interests</a></li>
+        <li><a href="../uses.html">Uses</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="section case">
+      <div class="container case__inner">
+        <p class="case__breadcrumb"><a href="index.html">&larr; All tools</a></p>
+        <p class="hero__eyebrow">Free tool &middot; token never leaves your browser</p>
+        <h1 class="case__title">JWT Inspector</h1>
+        <p style="color: var(--color-text-muted); line-height: 1.7; margin-bottom: 2rem;">Decodes a JSON Web Token and highlights the claims that matter for Entra and OAuth debugging: <code>tid</code>, <code>scp</code>, <code>roles</code>, <code>aud</code>, <code>exp</code>, and more. Decode only; the tool never verifies the signature and never transmits the token.</p>
+        <form id="jwt-form" class="checker__form" autocomplete="off" style="max-width:none;">
+          <div class="checker__row"><label for="jwt-input" class="checker__label">Paste JWT</label>
+          <textarea id="jwt-input" class="checker__input tool-textarea" rows="4" required spellcheck="false" placeholder="eyJ..."></textarea></div>
+          <button type="submit" class="btn btn--primary">Decode</button>
+        </form>
+        <div id="jwt-status" class="checker__status" role="status" aria-live="polite"></div>
+        <div id="jwt-results" hidden></div>
+        <div class="fine-print"><p>Decoding happens entirely in your browser with no network calls. This tool does NOT verify the signature &mdash; a decoded token is not a trusted token. Never paste a production token you would not want in your own browser history.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer__inner">
+      <p>&copy; <span id="footer-year">2026</span> Andrew Minga. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/tools2.js"></script>
+</body>
+</html>
