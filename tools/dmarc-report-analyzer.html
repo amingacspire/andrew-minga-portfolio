@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DMARC Report Analyzer: Read Aggregate XML Reports | Andrew Minga</title>
+  <meta name="description" content="Free DMARC aggregate report analyzer: upload rua XML, gz, or zip reports and see sending sources, alignment pass rates, and reject impact. Files never leave your browser.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://mingasolutions.com/tools/dmarc-report-analyzer.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="DMARC Report Analyzer">
+  <meta property="og:description" content="Turn unreadable DMARC aggregate XML into sending sources, pass rates, and reject impact. Files never leave your browser.">
+  <meta property="og:image" content="https://mingasolutions.com/assets/og-preview.jpg">
+  <meta property="og:url" content="https://mingasolutions.com/tools/dmarc-report-analyzer.html">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "DMARC Report Analyzer",
+    "url": "https://mingasolutions.com/tools/dmarc-report-analyzer.html",
+    "applicationCategory": "SecurityApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "author": { "@type": "Person", "name": "Andrew Minga", "url": "https://mingasolutions.com" }
+  }
+  </script>
+  <link rel="preload" href="../assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="nav__logo" href="../index.html" aria-label="Andrew Minga home">AM</a>
+      <button
+        class="nav__hamburger"
+        aria-controls="mobile-nav"
+        aria-expanded="false"
+        aria-label="Open navigation menu"
+      >
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+      <ul class="nav__links" id="mobile-nav" role="list">
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="index.html" class="is-active" aria-current="page">Tools</a></li>
+        <li><a href="../blog/index.html">Blog</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+        <li><a href="../interests.html">Interests</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="section case">
+      <div class="container case__inner">
+        <p class="case__breadcrumb"><a href="index.html">&larr; All tools</a></p>
+        <p class="hero__eyebrow">Free tool &middot; reports never leave your browser</p>
+        <h1 class="case__title">DMARC Report Analyzer</h1>
+        <p style="color: var(--color-text-muted); line-height: 1.7; margin-bottom: 2rem;">
+          Turns DMARC aggregate reports (the unreadable XML that lands at your <code>rua=</code> address)
+          into sending sources, alignment pass rates, and what would break at <code>p=reject</code>.
+          Accepts .xml, .xml.gz, and .zip straight from the report emails; multiple files merge into
+          one analysis. Parsing is 100% local.
+        </p>
+
+        <form id="dra-form" class="checker__form" autocomplete="off" style="max-width: none;">
+          <div class="checker__row">
+            <label for="dra-files" class="checker__label">Report files <span class="checker__optional">(.xml, .xml.gz, .zip — select several for a combined view)</span></label>
+            <input type="file" id="dra-files" class="checker__input" multiple accept=".xml,.gz,.zip,application/xml,application/gzip,application/zip">
+          </div>
+          <div class="checker__row">
+            <label for="dra-paste" class="checker__label">Or paste report XML</label>
+            <textarea id="dra-paste" class="checker__input tool-textarea" rows="5" spellcheck="false" placeholder="<feedback> ... </feedback>"></textarea>
+          </div>
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <button type="submit" class="btn btn--primary">Analyze</button>
+            <button type="button" class="btn btn--outline" id="dra-sample">Load sample report</button>
+          </div>
+        </form>
+
+        <div id="dra-status" class="checker__status" role="status" aria-live="polite"></div>
+        <div id="dra-results" hidden></div>
+
+        <div class="fine-print">
+          <p>
+            Aggregate (rua) reports contain counts and authentication results per sending IP; they do not
+            contain message content. Everything here parses locally in your browser; no report data is
+            uploaded, stored, or logged. Reverse DNS enrichment for source IPs queries Cloudflare's public
+            resolver with the IPs only. A single day of reports is a snapshot, not a verdict: review a few
+            weeks before tightening policy.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer__inner">
+      <p>&copy; <span id="footer-year">2026</span> Andrew Minga. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/dmarc-analyzer.js"></script>
+</body>
+</html>
