@@ -106,4 +106,9 @@
     <priority>0.7</priority>
   </url>
   <!-- SITEMAP-SYNC-INSERT -->
+  <url>
+    <loc>https://andrewminga.com/blog/posts/2026-07-12-why-fixing-your-data-architecture-matters-more-than-upgradin.html</loc>
+    <lastmod>2026-07-12</lastmod>
+    <priority>0.7</priority>
+  </url>
 </urlset>
