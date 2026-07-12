@@ -1,14 +1,14 @@
-# mingasolutions.com
+# andrewminga.com
 
-Personal portfolio and free IT tools site for [Andrew Minga](https://mingasolutions.com). Static HTML, one CSS file, vanilla JavaScript. No framework, no build system, no CMS. Built with Claude Code, deployed on Cloudflare Pages.
+Personal portfolio and free IT tools site for [Andrew Minga](https://andrewminga.com). Static HTML, one CSS file, vanilla JavaScript. No framework, no build system, no CMS. Built with Claude Code, deployed on Cloudflare Pages.
 
 ## What's here
 
 | Area | Description |
 |------|-------------|
 | **Portfolio** | Experience, skills, Microsoft cert verification links, project case studies |
-| **[Tools](https://mingasolutions.com/tools/)** | 12 free browser-based IT tools (see below) |
-| **[Blog](https://mingasolutions.com/blog/)** | Writing on Azure, MSP automation, and AI tooling; select LinkedIn posts mirror here automatically |
+| **[Tools](https://andrewminga.com/tools/)** | 12 free browser-based IT tools (see below) |
+| **[Blog](https://andrewminga.com/blog/)** | Writing on Azure, MSP automation, and AI tooling; select LinkedIn posts mirror here automatically |
 | **Interests** | The person behind the certs |
 
 ## The tools

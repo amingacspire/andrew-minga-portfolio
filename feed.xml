@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Andrew Minga | Blog</title>
-    <link>https://mingasolutions.com/blog/</link>
+    <link>https://andrewminga.com/blog/</link>
     <description>Azure, MSP automation, and AI tooling for IT operations. What actually worked, including the parts that didn't.</description>
     <language>en-us</language>
-    <atom:link href="https://mingasolutions.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <atom:link href="https://andrewminga.com/feed.xml" rel="self" type="application/rss+xml"/>
     <!-- FEED-SYNC-INSERT -->
     <item>
       <title>Building This Site with Claude Code</title>
-      <link>https://mingasolutions.com/blog/posts/building-this-site-with-claude-code.html</link>
-      <guid>https://mingasolutions.com/blog/posts/building-this-site-with-claude-code.html</guid>
+      <link>https://andrewminga.com/blog/posts/building-this-site-with-claude-code.html</link>
+      <guid>https://andrewminga.com/blog/posts/building-this-site-with-claude-code.html</guid>
       <pubDate>Fri, 11 Jul 2026 12:00:00 GMT</pubDate>
       <description>No framework, no build system, no CMS. Static HTML, one CSS file, and an AI pair that wrote most of it. What that workflow actually looks like and where the human judgment still lives.</description>
     </item>
     <item>
       <title>How are you guys actually securing Claude / AI code tools? (E5/Purview shop)</title>
-      <link>https://mingasolutions.com/blog/posts/2026-07-09-how-are-you-guys-actually-securing-claude-ai-code-tools-e5-p.html</link>
-      <guid>https://mingasolutions.com/blog/posts/2026-07-09-how-are-you-guys-actually-securing-claude-ai-code-tools-e5-p.html</guid>
+      <link>https://andrewminga.com/blog/posts/2026-07-09-how-are-you-guys-actually-securing-claude-ai-code-tools-e5-p.html</link>
+      <guid>https://andrewminga.com/blog/posts/2026-07-09-how-are-you-guys-actually-securing-claude-ai-code-tools-e5-p.html</guid>
       <pubDate>Wed, 09 Jul 2026 12:00:00 GMT</pubDate>
       <description>Your developers are pasting sensitive code into Claude right now. Do you know where it's going? What E5/Purview shops actually have available for governing AI coding tools.</description>
     </item>
