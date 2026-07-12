@@ -358,27 +358,45 @@
   // ══════════════════════════════════════════════════════════════
   var myipStatus = document.getElementById('myip-status');
   if (myipStatus && document.getElementById('myip-rows')) {
-    fetch('/cdn-cgi/trace').then(function (r) { return r.text(); }).then(function (t) {
+    // Force separate v4-only and v6-only lookups; the edge trace only shows
+    // whichever stack the browser preferred
+    function ipify(host) {
+      return fetch('https://' + host + '?format=json')
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) { return d && d.ip ? d.ip : null; })
+        .catch(function () { return null; });
+    }
+
+    Promise.all([
+      fetch('/cdn-cgi/trace').then(function (r) { return r.text(); }).catch(function () { return ''; }),
+      ipify('api4.ipify.org'),
+      ipify('api6.ipify.org')
+    ]).then(function (res) {
       var kv = {};
-      t.trim().split('\n').forEach(function (l) {
+      res[0].trim().split('\n').forEach(function (l) {
         var i = l.indexOf('=');
         if (i !== -1) kv[l.slice(0, i)] = l.slice(i + 1);
       });
+      var v4 = res[1], v6 = res[2];
+      if (v6 && v6.indexOf(':') === -1) v6 = null;  // v6 endpoint answered over v4
+
       var pairs = [
-        ['Your public IP', kv.ip],
+        ['IPv4 address', v4 || 'Not detected on this connection'],
+        ['IPv6 address', v6 || 'Not detected on this connection'],
         ['Location (country)', kv.loc],
         ['Nearest edge (colo)', kv.colo],
         ['TLS version', kv.tls],
         ['HTTP version', kv.http],
         ['User agent', kv.uag]
       ].filter(function (p) { return p[1]; });
+
       document.getElementById('myip-rows').innerHTML = pairs.map(function (p) {
         return '<tr><th>' + esc(p[0]) + '</th><td class="tool-table__data">' + esc(p[1]) + '</td></tr>';
       }).join('');
       myipStatus.textContent = '';
       document.getElementById('myip-results').hidden = false;
     }).catch(function () {
-      myipStatus.textContent = 'Could not read connection details from the edge.';
+      myipStatus.textContent = 'Could not read connection details.';
     });
   }
 })();

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IP Location Lookup | Andrew Minga</title>
+  <meta name="description" content="Free IP geolocation lookup: country, region, city, ISP, ASN, and timezone for any IP address, with a map. Runs in your browser, nothing logged.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://mingasolutions.com/tools/ip-location.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="IP Location Lookup">
+  <meta property="og:description" content="Country, region, city, ISP, ASN, and timezone for any IP address.">
+  <meta property="og:image" content="https://mingasolutions.com/assets/og-preview.jpg">
+  <meta property="og:url" content="https://mingasolutions.com/tools/ip-location.html">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "IP Location Lookup",
+    "url": "https://mingasolutions.com/tools/ip-location.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "author": { "@type": "Person", "name": "Andrew Minga", "url": "https://mingasolutions.com" }
+  }
+  </script>
+  <link rel="preload" href="../assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="nav__logo" href="../index.html" aria-label="Andrew Minga home">AM</a>
+      <button
+        class="nav__hamburger"
+        aria-controls="mobile-nav"
+        aria-expanded="false"
+        aria-label="Open navigation menu"
+      >
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+      <ul class="nav__links" id="mobile-nav" role="list">
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="index.html" class="is-active" aria-current="page">Tools</a></li>
+        <li><a href="../blog/index.html">Blog</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+        <li><a href="../interests.html">Interests</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="section case">
+      <div class="container case__inner">
+        <p class="case__breadcrumb"><a href="index.html">&larr; All tools</a></p>
+        <p class="hero__eyebrow">Free tool &middot; runs in your browser</p>
+        <h1 class="case__title">IP Location Lookup</h1>
+        <p style="color: var(--color-text-muted); line-height: 1.7; margin-bottom: 2rem;">
+          Geolocation, ISP, ASN, and timezone for any public IP address. Leave the field empty
+          to look up your own connection.
+        </p>
+
+        <form id="iploc-form" class="checker__form" autocomplete="off">
+          <div class="checker__row">
+            <label for="iploc-input" class="checker__label">IP address <span class="checker__optional">(IPv4 or IPv6; empty = your IP)</span></label>
+            <input type="text" id="iploc-input" class="checker__input" placeholder="8.8.8.8" spellcheck="false">
+          </div>
+          <button type="submit" class="btn btn--primary">Locate</button>
+        </form>
+
+        <div id="iploc-status" class="checker__status" role="status" aria-live="polite"></div>
+
+        <div id="iploc-results" hidden>
+          <table class="tool-table" aria-label="IP location details"><tbody id="iploc-rows"></tbody></table>
+          <div id="iploc-map"></div>
+        </div>
+
+        <div class="fine-print">
+          <p>
+            IP geolocation is an estimate derived from ISP address registrations, accurate to roughly
+            city level on a good day and sometimes off by an entire state. It locates the network,
+            not the person; VPNs and mobile carriers routinely place users hundreds of miles from
+            their real location. Lookups query the ipwho.is public API directly from your browser;
+            this site logs nothing.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer__inner">
+      <p>&copy; <span id="footer-year">2026</span> Andrew Minga. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script>
+  (function () {
+    'use strict';
+    var form = document.getElementById('iploc-form');
+    var status = document.getElementById('iploc-status');
+    var results = document.getElementById('iploc-results');
+    var rows = document.getElementById('iploc-rows');
+    var mapEl = document.getElementById('iploc-map');
+
+    function esc(s) {
+      var d = document.createElement('div');
+      d.textContent = String(s);
+      return d.innerHTML;
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var q = document.getElementById('iploc-input').value.trim();
+      if (q && !/^[0-9a-fA-F.:]+$/.test(q)) {
+        status.textContent = 'That does not look like an IP address.';
+        results.hidden = true;
+        return;
+      }
+      status.textContent = 'Looking up' + (q ? ' ' + q : ' your IP') + '…';
+      results.hidden = true;
+
+      fetch('https://ipwho.is/' + q).then(function (r) {
+        if (!r.ok) throw new Error('lookup service returned ' + r.status);
+        return r.json();
+      }).then(function (d) {
+        if (d.success === false) throw new Error(d.message || 'not a routable public IP');
+        var conn = d.connection || {};
+        var tz = d.timezone || {};
+        var pairs = [
+          ['IP', d.ip + (d.type ? ' (' + d.type + ')' : '')],
+          ['Location', [d.city, d.region, d.country].filter(Boolean).join(', ') + (d.flag && d.flag.emoji ? ' ' + d.flag.emoji : '')],
+          ['Postal', d.postal],
+          ['Coordinates', d.latitude != null ? d.latitude + ', ' + d.longitude : null],
+          ['ISP', conn.isp],
+          ['Organization', conn.org !== conn.isp ? conn.org : null],
+          ['ASN', conn.asn ? 'AS' + conn.asn : null],
+          ['Timezone', tz.id ? tz.id + ' (UTC' + tz.utc + ')' : null]
+        ].filter(function (p) { return p[1]; });
+
+        rows.innerHTML = pairs.map(function (p) {
+          return '<tr><th>' + esc(p[0]) + '</th><td class="tool-table__data">' + esc(p[1]) + '</td></tr>';
+        }).join('');
+
+        if (d.latitude != null && d.longitude != null) {
+          var lat = Number(d.latitude), lon = Number(d.longitude);
+          var pad = 0.35;
+          var bbox = (lon - pad) + ',' + (lat - pad) + ',' + (lon + pad) + ',' + (lat + pad);
+          mapEl.innerHTML = '<iframe class="iploc-map" loading="lazy" title="Approximate IP location map" ' +
+            'src="https://www.openstreetmap.org/export/embed.html?bbox=' + encodeURIComponent(bbox) +
+            '&layer=mapnik&marker=' + lat + ',' + lon + '"></iframe>' +
+            '<p class="checker__hint"><a href="https://www.openstreetmap.org/?mlat=' + lat + '&mlon=' + lon +
+            '#map=9/' + lat + '/' + lon + '" target="_blank" rel="noopener noreferrer">Open full map</a></p>';
+        } else {
+          mapEl.innerHTML = '';
+        }
+
+        status.textContent = '';
+        results.hidden = false;
+      }).catch(function (err) {
+        status.textContent = 'Lookup failed: ' + err.message;
+      });
+    });
+  })();
+  </script>
+</body>
+</html>
