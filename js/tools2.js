@@ -52,6 +52,7 @@
       out.hidden = true;
 
       var lookups = 0, voidLookups = 0, lines = [], warnings = [], seen = {};
+      var fetches = 0, MAX_FETCHES = 30, MAX_DEPTH = 15; // hard DoS caps beyond the RFC display limit
 
       function getSpf(d) {
         return doh(d, 'TXT').then(function (data) {
@@ -64,6 +65,7 @@
 
       // depth-first expansion; each include/redirect/a/mx/ptr/exists costs one lookup
       function expand(d, record, depth) {
+        if (depth > MAX_DEPTH) { lines.push('… max depth reached, stopping'); return Promise.resolve(); }
         var indent = new Array(depth + 1).join('   ');
         var tokens = record.split(/\s+/).filter(Boolean);
         lines.push(indent + esc(d) + ': ' + esc(record));
@@ -77,9 +79,11 @@
             if (!target) return;
             lookups++;
             chain = chain.then(function () {
-              if (lookups > 10) return;
+              // Stop fetching past the RFC limit OR a hard request cap (crafted-chain DoS guard)
+              if (lookups > 10 || fetches >= MAX_FETCHES) return;
               if (seen[target]) { lines.push(indent + '   ' + esc(target) + ': (already expanded)'); return; }
               seen[target] = true;
+              fetches++;
               return getSpf(target).then(function (rec) {
                 if (!rec) { voidLookups++; lines.push(indent + '   ' + esc(target) + ': NO SPF RECORD (void lookup)'); return; }
                 return expand(target, rec, depth + 1);
@@ -170,6 +174,14 @@
   if (v6Form) {
     function expandV6(ip) {
       var s = ip.toLowerCase();
+      // Embedded IPv4 tail (e.g. ::ffff:192.0.2.1) -> two hextets
+      var m4 = s.match(/(^|:)((\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3}))$/);
+      if (m4) {
+        var o = m4.slice(3, 7).map(Number);
+        if (o.some(function (x) { return x > 255; })) return null;
+        s = s.slice(0, s.length - m4[2].length) +
+          ((o[0] << 8) | o[1]).toString(16) + ':' + ((o[2] << 8) | o[3]).toString(16);
+      }
       var halves = s.split('::');
       if (halves.length > 2) return null;
       var left = halves[0] ? halves[0].split(':') : [];
@@ -414,12 +426,20 @@
       while (y < m) out.push(['+', B[y++]]);
       return out;
     }
+    var DIFF_MAX_LINES = 5000, DIFF_MAX_CHARS = 1000000; // caps the O(n*m) DP table
     diffForm.addEventListener('submit', function (e) {
       e.preventDefault();
       var a = document.getElementById('diff-a').value;
       var b = document.getElementById('diff-b').value;
       var doRedact = document.getElementById('diff-redact').checked;
       var out = document.getElementById('diff-results');
+      if (a.length + b.length > DIFF_MAX_CHARS ||
+          a.split('\n').length > DIFF_MAX_LINES || b.split('\n').length > DIFF_MAX_LINES) {
+        out.innerHTML = card('warn', 'Input too large',
+          null, 'Each side is capped at ' + DIFF_MAX_LINES.toLocaleString() + ' lines / 500k characters to keep the diff fast in-browser. Trim to the relevant section and retry.');
+        out.hidden = false;
+        return;
+      }
       if (doRedact) { a = redact(a); b = redact(b); }
       var d = lineDiff(a, b);
       var added = d.filter(function (x) { return x[0] === '+'; }).length;
