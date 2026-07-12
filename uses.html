@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Uses | Andrew Minga</title>
+  <meta name="description" content="The hardware, software, and AI stack Andrew Minga actually uses, and the reasoning behind each pick.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://andrewminga.com/uses.html">
+  <link rel="preload" href="assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="nav__logo" href="index.html" aria-label="Andrew Minga home">AM</a>
+      <button
+        class="nav__hamburger"
+        aria-controls="mobile-nav"
+        aria-expanded="false"
+        aria-label="Open navigation menu"
+      >
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+      <ul class="nav__links" id="mobile-nav" role="list">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#experience">Experience</a></li>
+        <li><a href="index.html#skills">Skills</a></li>
+        <li><a href="index.html#projects">Projects</a></li>
+        <li><a href="tools/index.html">Tools</a></li>
+        <li><a href="blog/index.html">Blog</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+        <li><a href="interests.html">Interests</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="section case">
+      <div class="container case__inner">
+        <p class="hero__eyebrow">/uses &middot; updated July 2026</p>
+        <h1 class="case__title">What I Use</h1>
+        <p style="color: var(--color-text-muted); line-height: 1.7; margin-bottom: 2rem;">
+          The gear, software, and AI stack behind my work, in the spirit of
+          <a href="https://uses.tech" target="_blank" rel="noopener noreferrer" style="color: var(--color-accent);">uses.tech</a>.
+          Nothing here is sponsored; everything here survived actual daily use, which is a
+          higher bar than any review.
+        </p>
+
+        <h2 class="tool-subhead">Workstation</h2>
+        <table class="tool-table"><tbody>
+          <tr><th>Machine</th><td>[Your daily driver — make/model, CPU, RAM]</td></tr>
+          <tr><th>Monitors</th><td>[Count and models]</td></tr>
+          <tr><th>Keyboard / mouse</th><td>[Models, and whether you care]</td></tr>
+          <tr><th>Headset / audio</th><td>[What survives your call schedule]</td></tr>
+          <tr><th>Desk setup</th><td>[Standing desk? dock? anything notable]</td></tr>
+        </tbody></table>
+
+        <h2 class="tool-subhead">Home Lab</h2>
+        <table class="tool-table"><tbody>
+          <tr><th>Compute</th><td>[Server/NUC/old tower running the experiments]</td></tr>
+          <tr><th>Network</th><td>[Firewall, switch, APs — brand loyalty or chaos]</td></tr>
+          <tr><th>Running right now</th><td>[The services/VMs actually alive this month]</td></tr>
+        </tbody></table>
+
+        <h2 class="tool-subhead">Software I Live In</h2>
+        <table class="tool-table"><tbody>
+          <tr><th>Editor</th><td>VS Code with the PowerShell extension</td></tr>
+          <tr><th>Terminal</th><td>[Windows Terminal? profile customizations?]</td></tr>
+          <tr><th>Browser</th><td>[Daily driver + why]</td></tr>
+          <tr><th>Notes</th><td>Obsidian for the knowledge vault; Notion for pipeline data</td></tr>
+          <tr><th>Admin consoles</th><td>Microsoft 365 admin, Entra, Intune, Azure portal, Defender. The usual tabs that never close.</td></tr>
+          <tr><th>[Other]</th><td>[Password manager, screenshot tool, anything you'd defend in an argument]</td></tr>
+        </tbody></table>
+
+        <h2 class="tool-subhead">AI Stack</h2>
+        <table class="tool-table"><tbody>
+          <tr><th>Daily driver</th><td>Claude Code, running against custom MCP servers that connect it to the platforms MSPs live in: ticketing, RMM, documentation, networking, licensing.</td></tr>
+          <tr><th>Automation</th><td>Rewst for client-facing workflow automation; GitHub Actions for pipelines, including the one that mirrors my LinkedIn posts to this blog.</td></tr>
+          <tr><th>Prompts</th><td>Maintained in the open at <a href="https://github.com/amingacspire/prompt-library" style="color: var(--color-accent);">prompt-library</a>.</td></tr>
+          <tr><th>Rule of use</th><td>AI output is a draft, not a decision. Everything security-relevant gets human review, and every claim needs an observable source.</td></tr>
+        </tbody></table>
+
+        <h2 class="tool-subhead">How I Pick Tools</h2>
+        <p style="color: var(--color-text-muted); line-height: 1.75;">
+          [2-3 sentences in your voice. Suggested angle based on how you actually work:
+          boring and reliable beats novel and shiny; if it can't be automated or scripted,
+          it's a liability; vendor slides are marketing, run the eval yourself.]
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer__inner">
+      <p>&copy; <span id="footer-year">2026</span> Andrew Minga. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
