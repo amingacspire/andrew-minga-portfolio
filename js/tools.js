@@ -25,6 +25,25 @@
     return ip.split('.').reverse().join('.') + '.in-addr.arpa';
   }
 
+  function isIpv6(s) { return s.indexOf(':') !== -1 && /^[0-9a-fA-F:]+$/.test(s); }
+
+  function reverseName6(ip) {
+    // Expand :: compression to 8 hextets, then nibble-reverse into ip6.arpa
+    var halves = ip.toLowerCase().split('::');
+    var left = halves[0] ? halves[0].split(':') : [];
+    var right = halves.length > 1 && halves[1] ? halves[1].split(':') : [];
+    var missing = 8 - left.length - right.length;
+    if (halves.length > 1) {
+      for (var i = 0; i < missing; i++) left.push('0');
+    }
+    var hextets = left.concat(right);
+    if (hextets.length !== 8) return null;
+    var nibbles = hextets.map(function (h) {
+      return ('0000' + h).slice(-4);
+    }).join('').split('').reverse().join('.');
+    return nibbles + '.ip6.arpa';
+  }
+
   // ══════════════════════════════════════════════════════════════
   // DNS Lookup
   // ══════════════════════════════════════════════════════════════
@@ -40,6 +59,7 @@
       var rows = document.getElementById('dns-rows');
 
       if (type === 'PTR' && isIpv4(name)) name = reverseName(name);
+      if (type === 'PTR' && isIpv6(name)) name = reverseName6(name) || name;
 
       status.textContent = 'Querying ' + name + ' (' + type + ')…';
       results.hidden = true;
@@ -350,6 +370,81 @@
       }).join('');
       status.textContent = '';
       results.hidden = false;
+    });
+  }
+
+  // ══════════════════════════════════════════════════════════════
+  // Reverse DNS (PTR) with forward confirmation
+  // ══════════════════════════════════════════════════════════════
+  var rdnsForm = document.getElementById('rdns-form');
+  if (rdnsForm) {
+    rdnsForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var ip = document.getElementById('rdns-input').value.trim();
+      var status = document.getElementById('rdns-status');
+      var results = document.getElementById('rdns-results');
+
+      var v4 = isIpv4(ip), v6 = !v4 && isIpv6(ip);
+      if (!v4 && !v6) {
+        status.textContent = 'Enter a valid IPv4 or IPv6 address.';
+        results.hidden = true;
+        return;
+      }
+      var ptrName = v4 ? reverseName(ip) : reverseName6(ip);
+      if (!ptrName) {
+        status.textContent = 'Could not parse that IPv6 address.';
+        results.hidden = true;
+        return;
+      }
+
+      status.textContent = 'Looking up PTR for ' + ip + '…';
+      results.hidden = true;
+
+      function fwdCard(host) {
+        // Forward-confirm: does the hostname resolve back to the queried IP?
+        return dohQuery(host, v4 ? 'A' : 'AAAA').then(function (data) {
+          var addrs = (data.Answer || [])
+            .filter(function (a) { return a.type === (v4 ? 1 : 28); })
+            .map(function (a) { return a.data.toLowerCase(); });
+          var confirmed = addrs.indexOf(ip.toLowerCase()) !== -1;
+          if (confirmed) {
+            return '<div class="check-card check-card--pass"><div class="check-card__head">' +
+              '<span class="check-card__chip">PASS</span><span class="check-card__title">' + esc(host) + '</span></div>' +
+              '<p class="check-card__note">Forward-confirmed: this hostname resolves back to ' + esc(ip) + '. Mail servers treat this as valid FCrDNS.</p></div>';
+          }
+          return '<div class="check-card check-card--warn"><div class="check-card__head">' +
+            '<span class="check-card__chip">WARN</span><span class="check-card__title">' + esc(host) + '</span></div>' +
+            (addrs.length ? '<code class="check-card__value">resolves to: ' + esc(addrs.join(', ')) + '</code>' : '') +
+            '<p class="check-card__note">PTR exists but the hostname does ' + (addrs.length ? 'not resolve back to this IP' : 'not resolve at all') +
+            '. Forward-confirmation fails, which many mail servers treat the same as no reverse DNS.</p></div>';
+        }).catch(function () {
+          return '<div class="check-card check-card--warn"><div class="check-card__head">' +
+            '<span class="check-card__chip">WARN</span><span class="check-card__title">' + esc(host) + '</span></div>' +
+            '<p class="check-card__note">PTR exists but the forward lookup failed.</p></div>';
+        });
+      }
+
+      dohQuery(ptrName, 'PTR').then(function (data) {
+        var hosts = (data.Answer || [])
+          .filter(function (a) { return a.type === 12; })
+          .map(function (a) { return a.data.replace(/\.$/, ''); });
+        if (hosts.length === 0) {
+          results.innerHTML = '<div class="check-card check-card--fail"><div class="check-card__head">' +
+            '<span class="check-card__chip">FAIL</span><span class="check-card__title">No PTR record</span></div>' +
+            '<p class="check-card__note">No reverse DNS for ' + esc(ip) + ' (queried ' + esc(ptrName) +
+            '). If this IP sends mail, that is a delivery problem: request a PTR from whoever owns the address block.</p></div>';
+          status.textContent = '';
+          results.hidden = false;
+          return;
+        }
+        Promise.all(hosts.map(fwdCard)).then(function (cards) {
+          results.innerHTML = cards.join('');
+          status.textContent = '';
+          results.hidden = false;
+        });
+      }).catch(function (err) {
+        status.textContent = 'Lookup failed: ' + err.message;
+      });
     });
   }
 
