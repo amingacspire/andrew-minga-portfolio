@@ -11,6 +11,11 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://andrewminga.com/uses.html</loc>
+    <lastmod>2026-07-12</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://andrewminga.com/projects/password-reset-automation.html</loc>
     <lastmod>2026-07-11</lastmod>
     <priority>0.8</priority>
