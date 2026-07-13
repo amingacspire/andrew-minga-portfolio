@@ -249,7 +249,7 @@
         ].join('\n'));
       },
       'whoami': function () {
-        print('Andrew Minga. IT leader, Azure Solutions Architect Expert,\nManager of Customer Experience Engineering at C Spire Business.\nBuilds MSP automation and AI tooling. Star Wars fan.');
+        print('Andrew Minga. IT leader, Azure Solutions Architect Expert,\nManager of Customer Experience Engineering at C Spire Business.\nBuilds MSP automation and AI tooling.\n\nStar Wars fan — and the Force is unusually strong in this terminal.');
       },
       'projects': function () { goTo('#projects', 'projects'); },
       'skills': function () { goTo('#skills', 'skills'); },
@@ -279,7 +279,7 @@
       },
       'ls': function () { print('about/  experience/  skills/  projects/  blog/  tools/  interests/  contact/'); },
       'sudo': function () { print('visitor is not in the sudoers file. This incident will be reported.'); },
-      'starwars': function () { print('May the Force be with you. Always.'); },
+      'starwars': function () { print('May the Force be with you. Always.\nA Jedi does not simply speak of the Force — a Jedi will use the force.'); },
       'hello': function () { print('Hello there. (General Kenobi!)'); },
       'force': function () { print('The Force flows through this terminal. But knowing about it is not enough — you must *use* it.'); },
       'use the force': startQuest,
