@@ -316,7 +316,10 @@
       stopAnimation();
       interactive = true;
       quest = 0;
-      lines = ["Interactive mode. Type 'help' to see commands, 'exit' to leave."];
+      lines = [
+        "Interactive mode. Type 'help' to see commands, 'exit' to leave.",
+        "psst — there's a hidden Star Wars challenge in here. A Jedi would try to `use the force`."
+      ];
       buffer = '';
 
       if (!hiddenInput) {
