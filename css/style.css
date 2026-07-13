@@ -880,8 +880,8 @@ ul { list-style: none; }
   font-size: 0.78rem;
   line-height: 1.65;
   color: #c8e6f5;
-  white-space: pre;
-  overflow-x: hidden;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
   tab-size: 2;
 }
 

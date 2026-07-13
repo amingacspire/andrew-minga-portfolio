@@ -198,7 +198,7 @@
       { prompt: 'Correct. The holocron glows brighter.\n\nTRIAL 2 of 3\n"The galaxy knew him as Senator, then Emperor Palpatine. The Sith knew him by another name. Speak it."',
         accept: ['darth sidious', 'sidious'] },
       { prompt: 'Correct. One seal remains.\n\nTRIAL 3 of 3\n"Name the command that turned the clone army against the Jedi and ended the Order."',
-        accept: ['order 66', 'order sixtysix', 'order sixty six', '66'] }
+        accept: ['order 66', 'execute order 66', 'order sixtysix', 'order sixty six', '66'] }
     ];
     function startQuest() {
       quest = 1;
