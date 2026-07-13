@@ -190,6 +190,49 @@
       }, 400);
     }
 
+    // ── Hidden Star Wars holocron puzzle (Option A: solver contacts Andrew) ──
+    var quest = 0; // 0 idle, 1-3 awaiting that trial's answer, 99 solved
+    var TRIALS = [
+      { prompt: 'TRIAL 1 of 3\n"From exile on Ahch-To, I trained the one who would bring balance to the Force. Name me."\n\nType your answer. (`abort` leaves the trial.)',
+        accept: ['luke', 'luke skywalker', 'skywalker'] },
+      { prompt: 'Correct. The holocron glows brighter.\n\nTRIAL 2 of 3\n"The galaxy knew him as Senator, then Emperor Palpatine. The Sith knew him by another name. Speak it."',
+        accept: ['darth sidious', 'sidious'] },
+      { prompt: 'Correct. One seal remains.\n\nTRIAL 3 of 3\n"Name the command that turned the clone army against the Jedi and ended the Order."',
+        accept: ['order 66', 'order sixtysix', 'order sixty six', '66'] }
+    ];
+    function startQuest() {
+      quest = 1;
+      print('A hidden transmission crackles to life...\n\nThe Force is strong with you — few find this channel. Three trials guard the holocron.\n\n' + TRIALS[0].prompt);
+    }
+    function answerTrial(input) {
+      var norm = input.trim().toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/\s+/g, ' ');
+      if (TRIALS[quest - 1].accept.indexOf(norm) === -1) {
+        print('"' + input + '"\nThe holocron stays dark. Focus, and try again. (`abort` to leave.)');
+        return;
+      }
+      if (quest < TRIALS.length) {
+        quest++;
+        print(TRIALS[quest - 1].prompt);
+      } else {
+        quest = 99;
+        print([
+          '',
+          '   *** HOLOCRON UNLOCKED ***',
+          '',
+          'You have the patience of a Jedi and the curiosity of a slicer.',
+          'That is exactly the kind of person I like to hear from.',
+          '',
+          '   Passphrase:  THE-FORCE-WILL-BE-WITH-YOU-ALWAYS',
+          '',
+          'Send it to me on LinkedIn (linkedin.com/in/andrew-minga-ba933587)',
+          'or through the Contact section, and mention you unlocked the holocron.',
+          'Reach the end of this and you have earned a reply. Let us talk.',
+          '',
+          "Type 'exit' to leave the terminal."
+        ].join('\n'));
+      }
+    }
+
     const commands = {
       'help': function () {
         print([
@@ -237,7 +280,10 @@
       'ls': function () { print('about/  experience/  skills/  projects/  blog/  tools/  interests/  contact/'); },
       'sudo': function () { print('visitor is not in the sudoers file. This incident will be reported.'); },
       'starwars': function () { print('May the Force be with you. Always.'); },
-      'hello': function () { print('Hello there. (General Kenobi!)'); }
+      'hello': function () { print('Hello there. (General Kenobi!)'); },
+      'force': function () { print('The Force flows through this terminal. But knowing about it is not enough — you must *use* it.'); },
+      'use the force': startQuest,
+      'use force': startQuest
     };
     commands['cls'] = commands['clear'];
     commands['dir'] = commands['ls'];
@@ -246,12 +292,21 @@
     function runCommand(raw) {
       const cmd = raw.trim().toLowerCase();
       lines.push(PROMPT + raw);
-      if (cmd !== '') {
-        if (commands[cmd]) {
-          commands[cmd]();
-        } else {
-          print("The term '" + raw.trim() + "' is not recognized as the name of a cmdlet,\nfunction, script file, or operable program. Type 'help' for options.");
-        }
+      if (cmd === '') { if (interactive) render(); return; }
+      // Inside an active trial, route input to the puzzle (help/clear/exit still work)
+      if (quest >= 1 && quest <= TRIALS.length) {
+        if (cmd === 'abort') { quest = 0; print('You step back from the holocron; it dims. (`use the force` to try again.)'); }
+        else if (cmd === 'exit') { commands.exit(); }
+        else if (cmd === 'help') { commands.help(); }
+        else if (cmd === 'clear' || cmd === 'cls') { lines = []; }
+        else { answerTrial(raw); }
+        if (interactive) render();
+        return;
+      }
+      if (commands[cmd]) {
+        commands[cmd]();
+      } else {
+        print("The term '" + raw.trim() + "' is not recognized as the name of a cmdlet,\nfunction, script file, or operable program. Type 'help' for options.");
       }
       if (interactive) render();
     }
@@ -260,6 +315,7 @@
       if (interactive) return;
       stopAnimation();
       interactive = true;
+      quest = 0;
       lines = ["Interactive mode. Type 'help' to see commands, 'exit' to leave."];
       buffer = '';
 
