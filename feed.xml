@@ -8,6 +8,15 @@
     <atom:link href="https://andrewminga.com/feed.xml" rel="self" type="application/rss+xml"/>
     <!-- FEED-SYNC-INSERT -->
     <item>
+      <title>I feel like I do not understand computers and feel stupid working in IT</title>
+      <link>https://andrewminga.com/blog/posts/2026-07-14-i-feel-like-i-do-not-understand-computers-and-feel-stupid-wo.html</link>
+      <guid>https://andrewminga.com/blog/posts/2026-07-14-i-feel-like-i-do-not-understand-computers-and-feel-stupid-wo.html</guid>
+      <pubDate>Tue, 14 Jul 2026 12:00:00 GMT</pubDate>
+      <description>Every senior IT pro I respect has a version of this story.
+
+A thread on r/sysadmin this week went viral for one reason: honesty. Someone admitted they feel like they do not understand computers and...</description>
+    </item>
+    <item>
       <title>Why fixing your data architecture matters more than upgrading your detection models</title>
       <link>https://andrewminga.com/blog/posts/2026-07-12-why-fixing-your-data-architecture-matters-more-than-upgradin.html</link>
       <guid>https://andrewminga.com/blog/posts/2026-07-12-why-fixing-your-data-architecture-matters-more-than-upgradin.html</guid>
